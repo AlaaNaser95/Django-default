@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from traffic.views import accidentCreate
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accident/form/', accidentCreate,name='create-accident'),
+    
 ]
