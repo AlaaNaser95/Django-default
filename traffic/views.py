@@ -5,7 +5,8 @@ from .models import Population
 from django.forms.models import modelform_factory
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 
@@ -76,7 +77,7 @@ def user_login(request):
             if auth_user is not None:
                 login(request, auth_user)
                 # Where you want to go after a successful login
-                return redirect('successfully_login')
+                return redirect('create-accident')
 
     context = {
         "form":form
@@ -90,69 +91,10 @@ def user_logout(request):
     return redirect("successful-logout")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def email(request):
+    subject = 'Thank you for registering to our site'
+    message = ' it  means a world to us '
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['sazidahossain@gmail.com',]
+    send_mail( subject, message, email_from, recipient_list )    
 
