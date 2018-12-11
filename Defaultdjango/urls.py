@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from traffic.views import accidentCreate
+from traffic.views import accidentCreate, user_login, user_register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accident/form/', accidentCreate,name='create-accident'),
+    path('login/', user_login,name='login'),
+    path('register/', user_register,name='register')
     
 ]
