@@ -3,6 +3,8 @@ from .forms import AccidentForm
 from django import forms
 from .models import Population
 from django.forms.models import modelform_factory
+from django.core.mail import send_mail
+from django.conf import settings
 # Create your views here.
 def accidentCreate(request):
         # return redirect('login')
@@ -28,3 +30,11 @@ def accidentCreate(request):
 
     }
     return render(request, "test.html", context )
+
+
+def email(request):
+    subject = 'Thank you for registering to our site'
+    message = ' it  means a world to us '
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = ['sazidahossain@gmail.com',]
+    send_mail( subject, message, email_from, recipient_list )    

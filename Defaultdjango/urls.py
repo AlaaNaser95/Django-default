@@ -18,10 +18,12 @@ from django.urls import path
 from traffic.views import accidentCreate
 from django.conf.urls.static import static
 from django.conf import settings
-
+from traffic.views import email
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accident/form/', accidentCreate,name='create-accident'),
+    path('sendMail/', email)
+
     
 ]
 
