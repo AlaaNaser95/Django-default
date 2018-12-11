@@ -15,14 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from traffic.views import accidentCreate
-from django.conf.urls.static import static
 from django.conf import settings
+from django.conf.urls.static import static
+from traffic.views import accidentCreate, user_login, user_register, email
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accident/form/', accidentCreate,name='create-accident'),
-    
+    path('login/', user_login,name='login'),
+    path('register/', user_register,name='register'),
+    path('sendMail/', email)
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

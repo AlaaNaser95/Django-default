@@ -8,6 +8,19 @@ class AccidentForm(forms.ModelForm):
         model = Accident
         fields=["location","images"]
 
+
+class UserRegister(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email' ,'password']
+
+        widgets={
+        'password': forms.PasswordInput(),
+        }
+
+class UserLogin(forms.Form):
+    username = forms.CharField(required=True)
+    password = forms.CharField(required=True, widget=forms.PasswordInput())
 #         widgets={
 #             'date': forms.DateInput(attrs={'type':"date"}),
 #             'time': forms.TimeInput(attrs={'type':"time"}),

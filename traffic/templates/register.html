@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register{% endblock title %}
+
+{% block content %}
+    
+<br>
+
+<div class="card text-center">
+  <div class="card-header">
+    <h5>Registration</h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            {{popForm|crispy}}
+            {{form|crispy}}
+            <input type="submit" value="Register" class="btn btn-outline-warning">
+        </form>
+    </p>
+  </div>
+  </div>
+</div>
+{% endblock content %}
