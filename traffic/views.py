@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import AccidentForm, UserRegister, UserLogin 
 from django import forms
-from .models import Population,
+from .models import Population, RegistrationImage,CarImage
 from django.forms.models import modelform_factory
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -15,17 +15,25 @@ def accidentCreate(request):
     # followers=[follow.follower.email for follow in Follow.objects.filter(followed=request.user)]
     form=AccidentForm()
     involvedForm=modelform_factory(Population,form=forms.ModelForm, fields=('civil_id',))
-    regist_images_form=modelform_factory(RegistrationImage,form=forms.ModelForm, fields=('regist_image1','regist_image2','regist_image3','regist_image4',))
+    regist_images_form=modelform_factory(RegistrationImage,form=forms.ModelForm, fields=('regist_image1','regist_image2',))
     car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('car_image1','car_image2','car_image3','car_image4',))
 
     if request.method == "POST":
         form = AccidentForm(request.POST, request.FILES)
         if form.is_valid():
             accident=form.save()
-            myPopulation=Population.objects.get(id=request.user.id)
+            myPopulation=Population.objects.get(user_id=request.user.id)
             p, created = Population.objects.get_or_create(civil_id=request.POST['civil_id'])
             accident.involved.add(myPopulation,p)
-            accident.save()
+            regist_images_form=regist_images_form(request.POST,request.FILES)
+            regist_images=regist_images_form.save(commit=False)
+            regist_images.accident=accident
+            regist_images.save()
+            car_images_form=car_images_form(request.POST,request.FILES)
+            car_images=car_images_form.save(commit=False)
+            car_images.accident=accident
+            car_images.save()
+            regist_images=accident.save()
             # sendemail(request.user,followers)
             # messages.success(request, "Successfully Created!")
             return redirect('create-accident')
@@ -38,36 +46,36 @@ def accidentCreate(request):
         "car_images_form":car_images_form,
 
     }
-    return render(request, "test.html", context )
-
-
-def accidentCreate(request):
-        # return redirect('login')
-    # followers=[follow.follower.email for follow in Follow.objects.filter(followed=request.user)]
-    form=AccidentForm()
-    involvedForm=modelform_factory(Population,form=forms.ModelForm, fields=('civil_id',))
-    regist_img_Form=modelform_factory(CarImage,form=forms.ModelForm, fields=('image',))
-    if request.method == "POST":
-        form = AccidentForm(request.POST, request.FILES)
-        if form.is_valid():
-            accident=form.save()
-            myPopulation=Population.objects.get(id=request.user.id)
-            p, created = Population.objects.get_or_create(civil_id=request.POST['civil_id'])
-            accident.involved.add(myPopulation,p)
-            accident.save()
-
-            # sendemail(request.user,followers)
-            # messages.success(request, "Successfully Created!")
-
-            return redirect('successfully_login')
-        print (form.errors)
-
-    context={
-        "involvedForm":involvedForm,
-        "form":form,
-
-    }
     return render(request, "accident.html", context )
+
+
+# def accidentCreate(request):
+#         # return redirect('login')
+#     # followers=[follow.follower.email for follow in Follow.objects.filter(followed=request.user)]
+#     form=AccidentForm()
+#     involvedForm=modelform_factory(Population,form=forms.ModelForm, fields=('civil_id',))
+#     regist_img_Form=modelform_factory(CarImage,form=forms.ModelForm, fields=('image',))
+#     if request.method == "POST":
+#         form = AccidentForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             accident=form.save()
+#             myPopulation=Population.objects.get(id=request.user.id)
+#             p, created = Population.objects.get_or_create(civil_id=request.POST['civil_id'])
+#             accident.involved.add(myPopulation,p)
+#             accident.save()
+
+#             # sendemail(request.user,followers)
+#             # messages.success(request, "Successfully Created!")
+
+#             return redirect('successfully_login')
+#         print (form.errors)
+
+#     context={
+#         "involvedForm":involvedForm,
+#         "form":form,
+
+#     }
+#     return render(request, "accident.html", context )
 
 
 
