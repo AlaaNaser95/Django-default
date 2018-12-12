@@ -15,8 +15,8 @@ def accidentCreate(request):
     # followers=[follow.follower.email for follow in Follow.objects.filter(followed=request.user)]
     form=AccidentForm()
     involvedForm=modelform_factory(Population,form=forms.ModelForm, fields=('civil_id',))
-    regist_images_form=modelform_factory(RegistrationImage,form=forms.ModelForm, fields=('regist_image1','regist_image2',))
-    car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('car_image1','car_image2','car_image3','car_image4',))
+    regist_images_form=modelform_factory(RegistrationImage,form=forms.ModelForm, fields=('regist_image1','regist_image2',),labels={'regist_image1':'Your car registration','regist_image2':'Other car registration'})
+    car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
 
     if request.method == "POST":
         form = AccidentForm(request.POST, request.FILES)

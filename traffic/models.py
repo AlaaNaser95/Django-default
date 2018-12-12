@@ -40,13 +40,10 @@ class Accident(models.Model):
     status=models.CharField(max_length=120,choices=STATUS,default='Pending')
 
 class CarImage(models.Model):
-    car_image1=models.ImageField()
-    car_image2=models.ImageField(blank=True,null=True)
-    car_image3=models.ImageField(blank=True,null=True)
-    car_image4=models.ImageField(blank=True,null=True)
+    accident_image=models.ImageField()
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
 
 class RegistrationImage(models.Model):
     regist_image1=models.ImageField()
     regist_image2=models.ImageField()
-    accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
+    accident=models.OneToOneField(Accident, on_delete=models.CASCADE)

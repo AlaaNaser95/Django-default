@@ -7,6 +7,9 @@ class AccidentForm(forms.ModelForm):
     class Meta:
         model = Accident
         fields=["location"]
+        labels = {
+                "location": "Accident Location"
+            }
 
 
 class UserRegister(forms.ModelForm):
