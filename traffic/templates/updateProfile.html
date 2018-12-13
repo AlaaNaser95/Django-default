@@ -6,7 +6,7 @@
     <div class="container">
         <div class="jumbotron">
           <h2 class="masthead-subheading mb-0">Edit Profile</h2>
-          <form action="{% url 'update-profile' profile.id %}" method="POST">
+          <form action="{% url 'update-profile' %}" method="POST">
             {% csrf_token %}
             {{user_form|crispy}}
             {{prof_form|crispy}}

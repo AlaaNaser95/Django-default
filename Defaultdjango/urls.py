@@ -28,8 +28,8 @@ urlpatterns = [
     path('sendMail/', email),
     path('accident/list/', accidentList,name='accident-list'),
     path('accident/detail/<int:accident_id>/', accidentDetail,name='accident-detail'),
-    path('profile/<int:profile_id>/', user_profile,name='profile'),
-    path('profile/update/<int:profile_id>/', updateProfile,name='update-profile'),
+    path('profile/', user_profile,name='profile'),
+    path('profile/update/', updateProfile,name='update-profile'),
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

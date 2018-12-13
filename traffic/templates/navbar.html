@@ -10,7 +10,9 @@
           <a class="nav-link text-white" href="{% url 'create-accident' %}"><i class="fas fa-plus-circle"></i> Report Accident</a>
         </li>
         <li class="nav-item">
-          <div class="nav-link text-white">{{request.user}}</div>
+          <a class="nav-link text-white" href="{% url 'profile' %}">
+          {{request.user}}</a>
+
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'register' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
