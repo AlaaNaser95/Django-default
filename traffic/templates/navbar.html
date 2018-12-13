@@ -1,9 +1,9 @@
-
+{% load static %}
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
   <div class="card-header">
     <ul class="nav nav-tabs card-header-tabs">
-
+      
       {% if request.user.is_authenticated %}
 
         <li class="nav-item">
@@ -13,19 +13,33 @@
           <div class="nav-link text-white">{{request.user}}</div>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'register' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          <a class="nav-link text-white" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
         </li>
       {% else %}
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'register' %}"><i class="far fa-user-plus"></i>Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'create-accident' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
+          <a class="nav-link text-white" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
         </li>
-      {% endif %}  
+      {% endif %}
     </ul>
   </div>
 </div>
 </nav>
 
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#"><img src="http://www.mof.gov.kw/MOFAuction/logoAuction/moi.png" width="80" height="80"/></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="#">Features</a>
+      <a class="nav-item nav-link" href="#">Pricing</a>
+      <a class="nav-item nav-link disabled" href="#">Disabled</a>
+    </div>
+  </div>
+  <a class="navbar-brand" href="#"><img class="float-right" src="{% static 'img/Moror.png' %}" width="150" height="100"/></a>
+</nav>
