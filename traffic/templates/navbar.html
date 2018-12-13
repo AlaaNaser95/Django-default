@@ -1,16 +1,31 @@
+
+
 <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-  <div class="container">
-    {# <a class="navbar-brand" href="{% url 'home' %}">Traffic</a> #}
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
+  <div class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+
+      {% if request.user.is_authenticated %}
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'create-accident' %}">Report Accident <i class="fas fa-plus-circle"></i> </a>  
+          <a class="nav-link text-white" href="{% url 'create-accident' %}"><i class="fas fa-plus-circle"></i> Report Accident</a>
         </li>
-      </ul>
-    </div>
+        <li class="nav-item">
+          <div class="nav-link text-white">{{request.user}}</div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'register' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+        </li>
+      {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'register' %}"><i class="far fa-user-plus"></i>Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'create-accident' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
+        </li>
+      {% endif %}  
+    </ul>
   </div>
+</div>
 </nav>
+
+

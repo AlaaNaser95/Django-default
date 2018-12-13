@@ -25,6 +25,7 @@ urlpatterns = [
     path('login/', user_login,name='login'),
     path('register/', user_register,name='register'),
     path('sendMail/', email)
+    # path('home/', home)
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

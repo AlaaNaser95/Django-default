@@ -1,17 +1,33 @@
-{%extends "base.html"%}
-	{% load crispy_forms_tags %}
-	{%block content%}
-	<div class="container">
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Report an Accident{% endblock title %}
+
+{% block content %}
+    
+<br>
+
+<div class="card-center text-center">
+  <div class="card-header bg-white"><h5>Report an Accident</h5></div>
+  </div>
+  <div class="card-body">
+    <div class="card-center text-dark text-center p-3">
 	<div class="jumbotron jumbotron-fluid bg-gradient-success">
 	<div class="container">
-	<form action="{% url 'create-accident' %}" method="POST" enctype="multipart/form-data">
-		<p>Insert second person's civil ID and fill in the form with the required images</p>
-        {% csrf_token %}
-        {{involvedForm|crispy}}
-        {{form|crispy}}
-        <input class = "btn btn-primary btn-xl rounded-pill mt-5" type="submit" value="Create">
-    </form>
+        <form action="{% url 'create-accident' %}" method="POST">
+        	<p>Please Provide Involved People Civil ID Numbers</p>
+            {% csrf_token %}
+            {{popForm|crispy}}
+            {{form|crispy}}
+            <br>
+            <input type="submit" value="Report" class="btn btn-outline-warning">
+        </form>
+    </div>
+	</div>
+	</div>
+    </div>
+  </div>
+  </div>
 </div>
-</div>
-</div>
-	{% endblock %}
+{% endblock content %}
