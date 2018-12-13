@@ -9,6 +9,6 @@
     		<h6 class="card-subtitle mb-2 text-muted">{{profile.user.first_name}} {{profile.user.last_name}}</h6>
     		<h6 class="card-subtitle mb-2 text-muted">{{profile.user.email}}</h6>
         <h6 class="card-subtitle mb-2 text-muted">{{profile.phone_no}}</h6>
-    		{# <a href="{% url 'update-profile' %}" class="btn btn-info m-2" >Edit Profile</a> #}      
+    		<a href="{% url 'update-profile' profile.id %}" class="btn btn-info m-2" >Edit Profile</a>      
 
 {% endblock %}
