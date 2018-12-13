@@ -24,6 +24,7 @@ urlpatterns = [
     path('accident/form/', accidentCreate,name='create-accident'),
     path('login/', user_login,name='login'),
     path('register/', user_register,name='register'),
+
     path('sendMail/', email),
     path('accident/list/', accidentList,name='accident-list'),
     path('accident/detail/<int:accident_id>/', accidentDetail,name='accident-detail'),
