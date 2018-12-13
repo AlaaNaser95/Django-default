@@ -44,6 +44,5 @@ class CarImage(models.Model):
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
 
 class RegistrationImage(models.Model):
-    regist_image1=models.ImageField()
-    regist_image2=models.ImageField()
-    accident=models.OneToOneField(Accident, on_delete=models.CASCADE)
+    regist_image=models.ImageField()
+    accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
