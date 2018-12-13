@@ -29,14 +29,20 @@ class Population(models.Model):
     
 
 class Accident(models.Model):
-
     involved= models.ManyToManyField(Population)
     location = models.TextField()
     date_time = models.DateTimeField(auto_now_add=True)
-    images = models.ImageField()
     STATUS={
     ('Pending','pending'),
     ('Accepted','accepted'),
     ('Expired','expired')
     }
     status=models.CharField(max_length=120,choices=STATUS,default='Pending')
+
+class CarImage(models.Model):
+    accident_image=models.ImageField()
+    accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
+
+class RegistrationImage(models.Model):
+    regist_image=models.ImageField()
+    accident=models.ForeignKey(Accident, on_delete=models.CASCADE)

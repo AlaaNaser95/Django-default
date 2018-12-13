@@ -15,19 +15,28 @@
     <div class="card-center text-dark text-center p-3">
 	<div class="jumbotron jumbotron-fluid bg-gradient-success">
 	<div class="container">
-        <form action="{% url 'create-accident' %}" method="POST">
-        	<p>Please Provide Involved People Civil ID Numbers</p>
-            {% csrf_token %}
-            {{popForm|crispy}}
+
+	<form action="{% url 'create-accident' %}" method="POST" enctype="multipart/form-data">
+		<p>Please Provide Involved People Civil ID Numbers</p>
+        {% csrf_token %}
+        {{formset.management_form}}
+        {% for form in formset %}
             {{form|crispy}}
-            <br>
-            <input type="submit" value="Report" class="btn btn-outline-warning">
-        </form>
-    </div>
-	</div>
-	</div>
-    </div>
-  </div>
-  </div>
+        {% endfor %}
+        {{form|crispy}}
+        <h3>Car Registeration</h3>
+        {{registrationFormset.management_form}}
+		{% for form in registrationFormset %}
+            {{form|crispy}}
+        {% endfor %}
+    	<div>
+    		<h3>Car accident images</h3>
+        	{{car_images_form|crispy}}
+    	</div>
+        <input type="submit" value="Report" class="btn btn-outline-warning">
+    </form>
 </div>
-{% endblock content %}
+</div>
+</div>
+	{% endblock %}
+

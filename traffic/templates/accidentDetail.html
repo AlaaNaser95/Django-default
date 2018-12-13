@@ -1,0 +1,27 @@
+{%extends "base.html"%}
+{%block content%}
+<div class="container" >
+	<div class="card text-center">
+		<div class="card-body">
+			<h5 class="card-title">Accident-{{accident.id}}</h5>
+			<p class="card-text" >Location: {{accident.location}}</p>
+			<p class="card-text">{{accident.date_time}}</p>
+			<div>
+				<h3>Accident Images</h3>
+			{% for img in car_images%}
+				<img src="{{img.accident_image.url}}"/>
+				{% endfor %}
+			</div>
+			<div>
+				<h3>Car Registration Images</h3>
+				{% for img in regis_images%}
+				<img src="{{img.regist_image.url}}"/>
+				
+				{% endfor %}
+			</div>
+		</div>
+		    
+</div>
+</div>
+
+{% endblock %}
