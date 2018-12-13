@@ -17,14 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from traffic.views import accidentCreate, user_login, user_register, email
+from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accident/form/', accidentCreate,name='create-accident'),
     path('login/', user_login,name='login'),
     path('register/', user_register,name='register'),
-    path('sendMail/', email)
+    path('sendMail/', email),
+    path('accident/list/', accidentList,name='accident-list'),
+    path('accident/detail/<int:accident_id>/', accidentDetail,name='accident-detail'),
+    path('profile/<int:profile_id>/', user_profile,name='profile'),
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

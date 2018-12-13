@@ -7,8 +7,20 @@
 	<form action="{% url 'create-accident' %}" method="POST" enctype="multipart/form-data">
 		<p>Insert second person's civil ID and fill in the form with the required images</p>
         {% csrf_token %}
-        {{involvedForm|crispy}}
+        {{formset.management_form}}
+        {% for form in formset %}
+            {{form|crispy}}
+        {% endfor %}
         {{form|crispy}}
+        <h3>Car Registeration images</h3>
+        {{registrationFormset.management_form}}
+		{% for form in registrationFormset %}
+            {{form|crispy}}
+        {% endfor %}
+    	<div>
+    		<h3>Car accident images</h3>
+        	{{car_images_form|crispy}}
+    	</div>
         <input class = "btn btn-primary btn-xl rounded-pill mt-5" type="submit" value="Create">
     </form>
 </div>

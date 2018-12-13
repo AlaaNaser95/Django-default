@@ -6,7 +6,10 @@ from .models import Accident
 class AccidentForm(forms.ModelForm):
     class Meta:
         model = Accident
-        fields=["location","images"]
+        fields=["location"]
+        labels = {
+                "location": "Accident Location"
+            }
 
 
 class UserRegister(forms.ModelForm):
