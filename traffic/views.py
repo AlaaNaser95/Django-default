@@ -10,6 +10,11 @@ from django.conf import settings
 from django.forms import modelformset_factory
 # Create your views here.
 
+def home(request):
+    
+    return render(request, 'home.html')
+
+
 def accidentCreate(request):
     if request.user.is_anonymous:
         return redirect('login')
@@ -19,6 +24,7 @@ def accidentCreate(request):
             fields=('civil_id',),
             labels={'civil_id':'The other civil id'},
             extra = 1
+
         )
     GroupRegistrationImageFormSet = modelformset_factory(
             RegistrationImage,
@@ -160,7 +166,7 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     # Where you would like to redirect the user after successfully logging out
-    return redirect("successful-logout")
+    return redirect("home")
 
 
 def email(request):
