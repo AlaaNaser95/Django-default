@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 
 
-class Population(models.Model):
+class Profile(models.Model):
 
     user=models.OneToOneField(User,blank=True,null=True,on_delete=models.CASCADE)
     civil_id = models.CharField(max_length=120)
@@ -29,7 +29,7 @@ class Population(models.Model):
     
 
 class Accident(models.Model):
-    involved= models.ManyToManyField(Population)
+    involved= models.ManyToManyField(Profile)
     location = models.TextField()
     date_time = models.DateTimeField(auto_now_add=True)
     STATUS={
