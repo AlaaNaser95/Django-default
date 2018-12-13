@@ -11,6 +11,8 @@ from django.forms import modelformset_factory
 # Create your views here.
 
 def accidentCreate(request):
+    if request.user.is_anonymous:
+        return redirect('login')
     GroupInvolvedFormSet = modelformset_factory(
             Population,
             form = forms.ModelForm,
@@ -97,11 +99,44 @@ def user_register(request):
 
 
 def user_profile(request,profile_id):
+    if request.user.is_anonymous:
+        return redirect('login')
     profile=Population.objects.get(id=profile_id)
+    if profile.user != request.user:
+        return render(request,'permission.html')
     context = {
         "profile":profile
     }
     return render(request, 'profile.html', context)
+
+
+def updateProfile(request,profile_id):
+    profile=Population.objects.get(id=profile_id)
+    prof_form = modelform_factory(Population, form=forms.ModelForm,fields=('phone_no',),labels={'phone_no':'Mobile Number'})
+    user_form = modelform_factory(User, form=UserRegister,fields=('username','password','email',))
+    user_form = user_form(instance=profile.user)
+    prof_form = prof_form(instance=profile)
+    if request.method == "POST":
+        prof_form = modelform_factory(Population, form=forms.ModelForm,fields=('phone_no',),labels={'phone_no':'Mobile Number'})
+        user_form = modelform_factory(User, form=UserRegister,fields=('username','password','email',))
+        prof_form = prof_form(request.POST,instance=profile)
+        user_form = user_form(request.POST,instance=request.user)
+        if prof_form.is_valid() and user_form.is_valid():
+            user=user_form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            prof_form.save()
+            # login(request.user)
+            # messages.success(request, "Successfully Updated!")
+            return redirect('create-accident')
+        
+    
+    context = {
+        "prof_form":prof_form,
+        "user_form":user_form,
+        "profile"  :profile,
+        }
+    return render(request, 'updateProfile.html', context)
 
 
 def user_login(request):
@@ -140,6 +175,8 @@ def email(request):
 
 
 def accidentList(request):
+    if request.user.is_anonymous:
+        return redirect('login')
     myPopulation=Population.objects.get(user_id=request.user.id)
     accidents=Accident.objects.filter(involved=myPopulation)
     # previous_books=chain(previous_books, Book.objects.filter(booker=request.user, event__date=datetime.date.today(), event__time__lt=datetime.datetime.now()))
@@ -160,7 +197,11 @@ def accidentList(request):
     return render(request, "accidentList.html",context)
 
 def accidentDetail(request, accident_id):
+    if request.user.is_anonymous:
+        return redirect('login')
     accident = Accident.objects.get(id=accident_id)
+    #need to check if the user involved in the accident
+    
     car_images=CarImage.objects.filter(accident=accident)
     regis_images=RegistrationImage.objects.filter(accident=accident)
     # student=classroom.student_set.all().order_by('name','-exam_grade')
