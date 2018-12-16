@@ -8,9 +8,10 @@
 <br>
 
 <div class="card-center text-center">
-  <div class="card-header bg-white"><h5>Registration</h5></div>
+  
   </div>
   <div class="card-body">
+    <div class="card-header bg-white text-center"><h5>Registration</h5></div>
     <div class="card bg-transparent text-white text-center p-3">
         <form action="{% url 'register' %}" method="POST">
             {% csrf_token %}
