@@ -43,6 +43,8 @@ def accidentCreate(request):
     car_images_form=CarImageForm()
     # car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
     """In case Of Post"""
+    # files = request.FILES.getlist('file_field')
+    # print(files)
     if request.method == "POST":
         accidentForm = AccidentForm(request.POST, request.FILES)
         involvedFormset = GroupInvolvedFormSet(request.POST, queryset=Profile.objects.none())
@@ -71,10 +73,10 @@ def accidentCreate(request):
                     regist_images=x.save(commit=False)
                     regist_images.accident=accident
                     regist_images.save()
-
-            car_images=car_images_form.save(commit=False)
-            car_images.accident=accident
-            car_images.save()
+            files = request.FILES.getlist('file_field')
+            for file in files:
+                car_images=CarImage.objects.create(accident_image=file,accident=accident)
+                car_images.save()
             regist_images=accident.save()
             # sendemail(request.user,followers)
             messages.success(request, "Successfully Submitted!")
@@ -93,7 +95,7 @@ def user_register(request):
     if request.method == 'POST':
         form = UserRegister(request.POST)
         popForm=popForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and popForm.is_valid():
             user = form.save(commit=False)
             user.set_password(user.password)
             user.save()
