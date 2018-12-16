@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import AccidentForm, UserRegister, UserLogin 
+from .forms import  AccidentForm,UserRegister, UserLogin 
 from django import forms
 from .models import Population, RegistrationImage,CarImage,Accident
 from django.forms.models import modelform_factory
@@ -16,7 +16,7 @@ def accidentCreate(request):
             form = forms.ModelForm,
             fields=('civil_id',),
             labels={'civil_id':'The other civil id'},
-            extra = 3
+            extra = 2
         )
     GroupRegistrationImageFormSet = modelformset_factory(
             RegistrationImage,
@@ -27,11 +27,11 @@ def accidentCreate(request):
         )
     formset = GroupInvolvedFormSet(queryset=Population.objects.none())
     registrationFormset = GroupRegistrationImageFormSet(queryset=RegistrationImage.objects.none())
-    form=AccidentForm()
+    accidentForm=AccidentForm()
     car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
     
     if request.method == "POST":
-        form = AccidentForm(request.POST, request.FILES)
+        accidentForm = AccidentForm(request.POST, request.FILES)
         formset = GroupInvolvedFormSet(request.POST, queryset=Population.objects.none())
         registrationFormset=GroupRegistrationImageFormSet(
                 request.POST,
@@ -39,8 +39,8 @@ def accidentCreate(request):
                 queryset=RegistrationImage.objects.none(),
             )
 
-        if form.is_valid() and formset.is_valid() and registrationFormset.is_valid():
-            accident=form.save()
+        if accidentForm.is_valid() and formset.is_valid() and registrationFormset.is_valid():
+            accident=accidentForm.save()
             myPopulation=Population.objects.get(user_id=request.user.id)
             accident.involved.add(myPopulation)
 
@@ -66,7 +66,7 @@ def accidentCreate(request):
             return redirect('create-accident')
     context={
         "formset":formset,
-        "form":form,
+        "accidentForm":accidentForm,
         "registrationFormset":registrationFormset,
         "car_images_form":car_images_form,
 
@@ -102,6 +102,9 @@ def user_profile(request,profile_id):
         "profile":profile
     }
     return render(request, 'profile.html', context)
+def trial(request):
+   
+    return render(request, 'trial.html')    
 
 
 def user_login(request):

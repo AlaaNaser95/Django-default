@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile
+from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile,trial
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,7 @@ urlpatterns = [
     path('register/', user_register,name='register'),
 
     path('sendMail/', email),
+    path('trial/',trial ),
     path('accident/list/', accidentList,name='accident-list'),
     path('accident/detail/<int:accident_id>/', accidentDetail,name='accident-detail'),
     path('profile/<int:profile_id>/', user_profile,name='profile'),
