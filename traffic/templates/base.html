@@ -37,14 +37,16 @@
   <body>
     
     {% include "navbar.html" %}
-    <div class="padded">
+    {% include "messages.html" %}
+    <div class="padded" >
     {% block content %}
 
     {% endblock %}
 </div>
-    <footer class="footer py-5 bg-black">
+    <footer class="footer py-5 bg-dark" style="position: fixed;
+    bottom: 0;">
       <div class="container">
-        <p class="m-0 text-center text-white small">Copyright &copy; Traffic Project</p>
+        <p class="m-0 text-center text-white small bg-dark">Copyright &copy; Traffic Project</p>
       </div>
     </footer>
 

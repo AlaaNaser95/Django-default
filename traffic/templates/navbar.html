@@ -1,30 +1,37 @@
+{% load static %}
 
 
-<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
 
+<nav class="navbar navbar-expand-lg navbar-light navbar-dark ">
+      <a class="navbar-brand" href="#"><img src="http://www.mof.gov.kw/MOFAuction/logoAuction/moi.png" width="80" height="80"/></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
       {% if request.user.is_authenticated %}
 
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'create-accident' %}"><i class="fas fa-plus-circle" onclick="get_students()"></i> Report Accident</a>
         </li>
         <li class="nav-item">
-          <div class="nav-link text-white">{{request.user}}</div>
+          <a class="nav-link text-white" href="{% url 'profile' %}">
+          {{request.user}}</a>
+
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'register' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          <a class="nav-link text-white" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
         </li>
       {% else %}
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'register' %}"><i class="far fa-user-plus"></i>Register</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'create-accident' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
+          <a class="nav-link text-white" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
         </li>
-      {% endif %}  
+      {% endif %}
     </ul>
+
   </div>
-</div>
 </nav>
 

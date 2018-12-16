@@ -1,11 +1,11 @@
 from django.db import models
+from django import forms
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-
-class Population(models.Model):
+class Profile(models.Model):
 
     user=models.OneToOneField(User,blank=True,null=True,on_delete=models.CASCADE)
     civil_id = models.CharField(max_length=120)
@@ -30,7 +30,7 @@ class Population(models.Model):
     
 
 class Accident(models.Model):
-    involved= models.ManyToManyField(Population)
+    involved= models.ManyToManyField(Profile)
     location_longitude = models.DecimalField(max_digits=9, default=1, decimal_places=6)
     location_latitude = models.DecimalField(max_digits=9, default=1,decimal_places=6)
     date_time = models.DateTimeField(auto_now_add=True)
@@ -40,7 +40,7 @@ class Accident(models.Model):
     ('Expired','expired')
     }
     status=models.CharField(max_length=120,choices=STATUS,default='Pending')
-
+    
 class CarImage(models.Model):
     accident_image=models.ImageField()
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
