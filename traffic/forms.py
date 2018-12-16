@@ -12,11 +12,12 @@ class AccidentForm(forms.ModelForm):
             }
 
 class CarImageForm(forms.ModelForm):
+    file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
     class Meta:
         model = CarImage
-        fields=["accident_image"]
+        fields=['file_field']
         labels = {
-                "accident_image": "Accident Image"
+                "file_field": "Accident Image"
             }
 
 class UserRegister(forms.ModelForm):
@@ -31,3 +32,12 @@ class UserRegister(forms.ModelForm):
 class UserLogin(forms.Form):
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, widget=forms.PasswordInput())
+
+class ProfileForm(forms.Form):
+    class Meta:
+        model = Profile
+        fields = ['civil_id', 'mobile_no']
+    def clean(self):
+        cleaned_data = super(ProfileForm, self).clean()
+        # additional cleaning here
+        return cleaned_data
