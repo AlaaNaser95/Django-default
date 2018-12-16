@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from django.forms import modelformset_factory
+from django.contrib import messages
 # Create your views here.
 
 def home(request):
@@ -72,8 +73,8 @@ def accidentCreate(request):
             car_images.save()
             regist_images=accident.save()
             # sendemail(request.user,followers)
-            # messages.success(request, "Successfully Created!")
-            return redirect('create-accident')
+            messages.success(request, "Successfully Submitted!")
+            return redirect('home')
     context={
         "involvedFormset":involvedFormset,
         "accidentForm":accidentForm,
