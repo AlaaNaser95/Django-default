@@ -54,10 +54,10 @@ def accidentCreate(request):
                 queryset=RegistrationImage.objects.none(),
             )
         car_images_form=CarImageForm(request.POST,request.FILES)
+        print (involvedFormset)
 
 
         if accidentForm.is_valid()  and registrationFormset.is_valid() and car_images_form.is_valid():
-            print("Hello")
             accident=accidentForm.save()
             myProfile=Profile.objects.get(user_id=request.user.id)
             accident.involved.add(myProfile)
@@ -65,7 +65,8 @@ def accidentCreate(request):
             for x in involvedFormset:
                 pop=x.save(commit=False)
                 p, created = Profile.objects.get_or_create(civil_id=pop.civil_id)
-                accident.involved.add(p)
+                if p:
+                    accident.involved.add(p)
 
             for x in registrationFormset:
                 if x.cleaned_data:

@@ -38,7 +38,8 @@ class Accident(models.Model):
     STATUS={
     ('Pending','pending'),
     ('Accepted','accepted'),
-    ('Expired','expired')
+    ('Expired','expired'),
+    ('New','new')
     }
     status=models.CharField(max_length=120,choices=STATUS,default='Pending')
 
