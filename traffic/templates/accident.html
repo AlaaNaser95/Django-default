@@ -52,7 +52,6 @@
 function showLocation() {
     if (navigator.geolocation.getCurrentPosition(showPosition)) {
         position=navigator.geolocation.getCurrentPosition(showPosition)
-
         showPosition(position)
     }
     else if(!navigator.geolocation){
@@ -66,8 +65,8 @@ function showPosition(position) {
         var latlon = position.coords.latitude + "," + position.coords.longitude;
         var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
 
-document.getElementById("id_location_longitude").value=position.coords.longitude
-document.getElementById("id_location_latitude").value=position.coords.latitude
+document.getElementById("id_location_longitude").value=position.coords.longitude.toFixed(6)
+document.getElementById("id_location_latitude").value=position.coords.latitude.toFixed(6)
 document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
    
 }

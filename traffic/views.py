@@ -55,6 +55,7 @@ def accidentCreate(request):
 
 
         if accidentForm.is_valid() and involvedFormset.is_valid() and registrationFormset.is_valid() and car_images_form.is_valid():
+            print("Hello")
             accident=accidentForm.save()
             myProfile=Profile.objects.get(user_id=request.user.id)
             accident.involved.add(myProfile)

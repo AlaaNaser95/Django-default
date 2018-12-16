@@ -8,7 +8,6 @@ from .models import Accident,Profile, CarImage
 class AccidentForm(forms.ModelForm):
     class Meta:
         model = Accident
-
         fields=[ "location_longitude", "location_latitude" ]
         widgets = {'location_longitude': forms.HiddenInput(),
         'location_latitude': forms.HiddenInput()}
