@@ -8,7 +8,10 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.conf import settings
 from django.forms import modelformset_factory
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 from django.contrib import messages
+
 # Create your views here.
 
 def home(request):
@@ -25,7 +28,6 @@ def accidentCreate(request):
             fields=('civil_id',),
             labels={'civil_id':'The other civil id'},
             extra = 1
-
         )
     GroupRegistrationImageFormSet = modelformset_factory(
             RegistrationImage,
@@ -37,13 +39,13 @@ def accidentCreate(request):
     involvedFormset = GroupInvolvedFormSet(queryset=Profile.objects.none())
     registrationFormset = GroupRegistrationImageFormSet(queryset=RegistrationImage.objects.none())
     accidentForm=AccidentForm()
+
     car_images_form=CarImageForm()
     # car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
     """In case Of Post"""
     # files = request.FILES.getlist('file_field')
     # print(files)
     if request.method == "POST":
-
         accidentForm = AccidentForm(request.POST, request.FILES)
         involvedFormset = GroupInvolvedFormSet(request.POST, queryset=Profile.objects.none())
         registrationFormset=GroupRegistrationImageFormSet(
@@ -53,7 +55,9 @@ def accidentCreate(request):
             )
         car_images_form=CarImageForm(request.POST,request.FILES)
 
+
         if accidentForm.is_valid() and involvedFormset.is_valid() and registrationFormset.is_valid() and car_images_form.is_valid():
+            print("Hello")
             accident=accidentForm.save()
             myProfile=Profile.objects.get(user_id=request.user.id)
             accident.involved.add(myProfile)
@@ -82,7 +86,6 @@ def accidentCreate(request):
         "accidentForm":accidentForm,
         "registrationFormset":registrationFormset,
         "car_images_form":car_images_form,
-
     }
     return render(request, "accident.html", context )
 
@@ -140,9 +143,9 @@ def updateProfile(request):
     context = {
         "prof_form":prof_form,
         "user_form":user_form,
-        
         }
     return render(request, 'updateProfile.html', context)
+
 
 
 def user_login(request):
@@ -173,11 +176,11 @@ def user_logout(request):
 
 
 def email(request):
-    subject = 'Thank you for registering to our site'
-    message = ' it  means a world to us '
-    email_from = settings.EMAIL_HOST_USER
-    recipient_list = ['sazidahossain@gmail.com',]
-    send_mail( subject, message, email_from, recipient_list )    
+    subject = 'Email sent'     
+    html_message = render_to_string('trial.html')      
+    plain_message = strip_tags(html_message)     
+    
+    send_mail(subject, plain_message, '', ['sazidahossain@gmail.com'], html_message=html_message)
 
 
 def accidentList(request):

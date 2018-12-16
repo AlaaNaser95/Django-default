@@ -1,15 +1,18 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.forms.widgets import HiddenInput
 from .models import Accident,Profile, CarImage
+
 
 
 class AccidentForm(forms.ModelForm):
     class Meta:
         model = Accident
-        fields=["location"]
-        labels = {
-                "location": "Accident Location"
-            }
+        fields=[ "location_longitude", "location_latitude" ]
+        widgets = {'location_longitude': forms.HiddenInput(),
+        'location_latitude': forms.HiddenInput()}
+            
+
 
 class CarImageForm(forms.ModelForm):
     file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
@@ -19,6 +22,7 @@ class CarImageForm(forms.ModelForm):
         labels = {
                 "file_field": "Accident Image"
             }
+
 
 class UserRegister(forms.ModelForm):
     class Meta:

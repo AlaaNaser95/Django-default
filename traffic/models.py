@@ -17,6 +17,7 @@ class Profile(models.Model):
 
 
 
+
 # @receiver(post_save, sender=User)
 
 # def create_user_population(sender, instance, created, **kwargs):
@@ -34,7 +35,8 @@ class Profile(models.Model):
 
 class Accident(models.Model):
     involved= models.ManyToManyField(Profile)
-    location = models.TextField()
+    location_longitude = models.DecimalField(max_digits=9, default=1, decimal_places=6)
+    location_latitude = models.DecimalField(max_digits=9, default=1,decimal_places=6)
     date_time = models.DateTimeField(auto_now_add=True)
     STATUS={
     ('Pending','pending'),
