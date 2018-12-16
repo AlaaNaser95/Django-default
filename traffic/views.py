@@ -23,7 +23,7 @@ def accidentCreate(request):
             Profile,
             form = forms.ModelForm,
             fields=('civil_id',),
-            labels={'civil_id':'The other civil id'},
+            labels={'civil_id':'Civil id'},
             extra = 1
 
         )
@@ -99,7 +99,7 @@ def user_register(request):
             pop.save()
             login(request, user)
             # Where you want to go after a successful signup
-            return redirect('create-accident')
+            return redirect('profile')
     context = {
         "form":form,
         "popForm":popForm,
@@ -110,7 +110,12 @@ def user_register(request):
 def user_profile(request):
     if request.user.is_anonymous:
         return redirect('login')
-    return render(request, 'profile.html')
+    accidents=Accident.objects.filter(involved=request.user.profile)
+    context={
+        'accidents':accidents,  
+    }
+    return render(request, 'profile.html',context)
+
 
 
 def updateProfile(request):
@@ -156,7 +161,7 @@ def user_login(request):
             if auth_user is not None:
                 login(request, auth_user)
                 # Where you want to go after a successful login
-                return redirect('create-accident')
+                return redirect('profile')
 
     context = {
         "form":form

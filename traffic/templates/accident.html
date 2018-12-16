@@ -5,38 +5,39 @@
 {% block title %}Report an Accident{% endblock title %}
 
 {% block content %}
-    
+
 <br>
 
-<div class="card-center text-center">
-  <div class="card-header bg-white"><h5>Report an Accident</h5></div>
-  </div>
+<div class="container" style="    display: flex;
+    justify-content: center;">
+<div class="card text-center" style="width: 50rem;">
+  <h3 class="card-header bg-white">Report an Accident</h3>
   <div class="card-body">
-    <div class="card-center text-dark text-center p-3">
-	<div class="jumbotron jumbotron-fluid bg-gradient-success">
-	<div class="container">
-
-	<form action="{% url 'create-accident' %}" method="POST" enctype="multipart/form-data">
-		<p>Please Provide Involved People Civil ID Numbers</p>
-        {% csrf_token %}
-        {{involvedFormset.management_form}}
-        {% for form in involvedFormset %}
-            {{form|crispy}}
-        {% endfor %}
+        <form action="{% url 'create-accident' %}" method="POST" enctype="multipart/form-data">
+            <p>Please Provide Involved People Civil ID Numbers</p>
+            <br>
+            {% csrf_token %}
+            {{involvedFormset.management_form}}
+            {% for form in involvedFormset %}
+                {{popForm|crispy}}
+                {{form|crispy}}
+            {% endfor %}
+            <br>
         {{accidentForm|crispy}}
+        <br>
         <h3>Car Registeration</h3>
         {{registrationFormset.management_form}}
-		{% for form in registrationFormset %}
+        {% for form in registrationFormset %}
             {{form|crispy}}
         {% endfor %}
-    	<div>
-    		<h3>Car accident images</h3>
-        	{{car_images_form|crispy}}
-    	</div>
-        <input type="submit" value="Report" class="btn btn-outline-warning">
-    </form>
-</div>
-</div>
-</div>
+        <br>
+        <div>
+        <h3>Car accident images</h3>
+        {{car_images_form|crispy}}
+    </div>
+    <br>
+    <input type="submit" value="Report" class="btn btn-outline-warning">
+
 	{% endblock %}
+
 
