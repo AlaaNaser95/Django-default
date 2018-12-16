@@ -30,7 +30,7 @@ def accidentCreate(request):
             RegistrationImage,
             form = forms.ModelForm,
             fields=('regist_image',),
-            labels={'regist_image':'Car registration Image'},
+            labels={'regist_image':'Involved Car registration'},
             extra = 2
         )
     involvedFormset = GroupInvolvedFormSet(queryset=Profile.objects.none())
