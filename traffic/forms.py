@@ -1,13 +1,15 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import Accident
-
+from django.forms.widgets import HiddenInput
 
 class AccidentForm(forms.ModelForm):
     class Meta:
         model = Accident
         fields=[ "location_longitude", "location_latitude" ]
-       
+        widgets = {'location_longitude': forms.HiddenInput(),
+        'location_latitude': forms.HiddenInput()}
+            
 
 class UserRegister(forms.ModelForm):
     class Meta:

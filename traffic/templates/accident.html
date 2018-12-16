@@ -26,9 +26,10 @@
     
             <h3>Location</h3>
             <div id="mapholder"></div>
-               <button id="location" onclick="showLocation()">Attach Location</button>
+
+            <button id="location" onclick="showLocation()" class="btn btn-outline-warning">Attach Location</button>
    
-   
+   {{accidentForm|crispy}}
         <h3>Car Registeration</h3>
         {{registrationFormset.management_form}}
 		{% for form in registrationFormset %}
@@ -49,6 +50,7 @@
 function showLocation() {
     if (navigator.geolocation.getCurrentPosition(showPosition)) {
         position=navigator.geolocation.getCurrentPosition(showPosition)
+
         showPosition(position)
     }
     else if(!navigator.geolocation){
@@ -60,12 +62,12 @@ function showPosition(position) {
 
        
         var latlon = position.coords.latitude + "," + position.coords.longitude;
-        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=14&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
+        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
 
-
-  document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
- 
-
+document.getElementById("id_location_longitude").value=position.coords.longitude
+document.getElementById("id_location_latitude").value=position.coords.latitude
+document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+   
 }
 
 </script>
