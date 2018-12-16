@@ -10,6 +10,7 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       {% if request.user.is_authenticated %}
+
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'profile' %}">
           {{request.user}}</a>
@@ -37,3 +38,4 @@
 
   </div>
 </nav>
+
