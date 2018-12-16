@@ -10,9 +10,7 @@ class Profile(models.Model):
     civil_id = models.CharField(max_length=120,unique=True,error_messages={'unique':"This civil id has already been used."})
     phone_no= models.CharField(max_length=120,blank=True,null=True)
 
-    def save(self, *args,**kwargs):
-        self.validate_unique()
-        super(Server,self).save(*args, **kwargs) 
+
 
 
 
