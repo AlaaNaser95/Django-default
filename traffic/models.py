@@ -36,12 +36,18 @@ class Accident(models.Model):
     location_latitude = models.DecimalField(max_digits=9, default=1,decimal_places=6)
     date_time = models.DateTimeField(auto_now_add=True)
     STATUS={
+    ('New','new'),
     ('Pending','pending'),
     ('Accepted','accepted'),
     ('Expired','expired'),
-    ('New','new')
+    
     }
-    status=models.CharField(max_length=120,choices=STATUS,default='Pending')
+    STATUS_FOR_STAFF={
+    ('Accepted','accepted'),
+    ('Declined','declined'),
+    }
+    status=models.CharField(max_length=120,choices=STATUS,default='New')
+    status_for_staff=models.CharField(max_length=120,blank=True,null=True,choices=STATUS_FOR_STAFF)
 
 class CarImage(models.Model):
     accident_image=models.FileField()
