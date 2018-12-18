@@ -37,11 +37,12 @@ class UserLogin(forms.Form):
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, widget=forms.PasswordInput())
 
-class ProfileForm(forms.Form):
+class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['civil_id', 'mobile_no']
+        fields = ['civil_id', 'phone_no']
     def clean(self):
         cleaned_data = super(ProfileForm, self).clean()
         # additional cleaning here
         return cleaned_data
+

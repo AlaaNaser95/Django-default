@@ -28,16 +28,21 @@
       <th scope="col">Date & Time</th>
       <th scope="col">Location</th>
       <th scope="col">status</th>
+      <th scope="col"></th>
     </tr>
   </thead class="thead text-white">
   <tbody class="thead text-white">
   {% for accident in  accidents %}
+  
   <tr>
-  <td>{{accident.id}}</td>
+    
+  <td><a href="{% url 'accident-detail' accident.id %}">{{accident.id}}</a></td>  
   <td>{{accident.date_time}}</td>
   <td>{{accident.location}}</td>
   <td>{{accident.status}}</td>
+  <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">view</a></td>
 </tr>
+
   {% endfor %}
 </div>  
 
