@@ -12,7 +12,9 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
 
+
 # Create your views here.
+
 
 def home(request):
     

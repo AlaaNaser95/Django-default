@@ -97,7 +97,7 @@ html { -webkit-text-size-adjust:none; -ms-text-size-adjust: none;}
 				<div style="line-height: 24px;">
 					<font face="Arial, Helvetica, sans-serif" size="4" color="#57697e" style="font-size: 15px;">
 					<span style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; color: #57697e;">
-						You are being sent this email due to your involvement in the following accident<br> Location: xyz<br> Date: xyz<br> Time:xyz
+						You are being sent this email due to your involvement in the following accident<br> Location: {{context.location_longitude}}<br> Date & Time: {{context.date_time}}
 					</span></font>
 				</div>
 				<!-- padding --><div style="height: 40px; line-height: 40px; font-size: 10px;"></div>
@@ -150,3 +150,5 @@ html { -webkit-text-size-adjust:none; -ms-text-size-adjust: none;}
  
 </td></tr>
 </table>
+
+

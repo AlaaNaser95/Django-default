@@ -1,10 +1,11 @@
 {%extends "base.html"%}
 {%block content%}
-<div class="container" >
+<div class="container">
+	<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
 	<div class="card text-center">
 		<div class="card-body">
 			<h5 class="card-title">Accident-{{accident.id}}</h5>
-			<p class="card-text" >Location: {{accident.location}}</p>
+			<p class="card-text">Location:<div id="mapholder"></div></p>
 			<p class="card-text">{{accident.date_time}}</p>
 			<div>
 				<h3>Accident</h3>
@@ -23,5 +24,17 @@
 		    
 </div>
 </div>
+<script>
+
+function showPosition(location_longitude,location_latitude) {
+console.log("Hello")       
+        var latlon = location_latitude + "," + location_longitude;
+        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
+
+document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+   
+}
+
+</script>
 
 {% endblock %}
