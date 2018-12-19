@@ -12,7 +12,9 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
 
+
 # Create your views here.
+
 
 def home(request):
     
@@ -54,10 +56,10 @@ def accidentCreate(request):
                 queryset=RegistrationImage.objects.none(),
             )
         car_images_form=CarImageForm(request.POST,request.FILES)
+        print (involvedFormset)
 
 
         if accidentForm.is_valid()  and registrationFormset.is_valid() and car_images_form.is_valid():
-            print("Hello")
             accident=accidentForm.save()
             myProfile=Profile.objects.get(user_id=request.user.id)
             accident.involved.add(myProfile)
@@ -65,7 +67,8 @@ def accidentCreate(request):
             for x in involvedFormset:
                 pop=x.save(commit=False)
                 p, created = Profile.objects.get_or_create(civil_id=pop.civil_id)
-                accident.involved.add(p)
+                if p.civil_id:
+                    accident.involved.add(p)
 
             for x in registrationFormset:
                 if x.cleaned_data:
@@ -77,8 +80,8 @@ def accidentCreate(request):
                 car_images=CarImage.objects.create(accident_image=file,accident=accident)
                 car_images.save()
             regist_images=accident.save()
-            # sendemail(request.user,followers)
             messages.success(request, "Successfully Submitted!")
+            email(request,accident)
             return redirect('home')
     context={
         "involvedFormset":involvedFormset,
@@ -179,9 +182,9 @@ def user_logout(request):
     return redirect("home")
 
 
-def email(request):
+def email(request,context):
     subject = 'Email sent'     
-    html_message = render_to_string('trial.html')      
+    html_message = render_to_string('trial.html',{'context':context})      
     plain_message = strip_tags(html_message)     
     
     send_mail(subject, plain_message, '', ['sazidahossain@gmail.com'], html_message=html_message)
@@ -214,3 +217,15 @@ def accidentDetail(request, accident_id):
         "regis_images":regis_images
         }
     return render(request, 'accidentDetail.html', context)
+
+def compliance(request,accident_id):
+    accident=Accident.objects.get(id=accident_id)
+    accident.status='Pending'
+    accident.save()
+    return render(request, 'compliance.html') 
+
+def declined(request,accident_id):
+    accident=Accident.objects.get(id=accident_id)
+    accident.status='Declined'
+    accident.save()
+    return render(request, 'decline.html')        
