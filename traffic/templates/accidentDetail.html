@@ -5,7 +5,29 @@
 	<div class="card text-center">
 		<div class="card-body">
 			<h5 class="card-title">Accident-{{accident.id}}</h5>
-			<p class="card-text">Location:<div id="mapholder"></div></p>
+
+			<h5 class="card-title">Involved:</h5>
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Civi ID</th>
+      <th scope="col">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%for person in involved%}
+			<tr>
+			<td>{{person.civil_id}}</td>
+			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
+			</tr>
+			{% endfor%}
+		</tbody>
+
+			</table>
+		
+
+			<p class="card-text" >Location: {{accident.location}}</p>
+
 			<p class="card-text">{{accident.date_time}}</p>
 			<div>
 				<h3>Accident</h3>

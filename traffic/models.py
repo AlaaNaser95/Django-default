@@ -56,3 +56,10 @@ class CarImage(models.Model):
 class RegistrationImage(models.Model):
     regist_image=models.ImageField()
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
+
+class Report(models.Model):
+    detective= models.ForeignKey(User,on_delete=models.CASCADE)
+    examiner= models.CharField(max_length=120)
+    accident= models.OneToOneField(Accident,on_delete=models.CASCADE)
+    comment= models.TextField()
+    reported_at= models.DateTimeField(auto_now_add=True)

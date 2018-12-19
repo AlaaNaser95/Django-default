@@ -1,0 +1,50 @@
+{%extends "base.html"%}
+{%block content%}
+<div class="container" >
+	<div class="card text-center">
+		<div class="card-body">
+			<h5 class="card-title">Accident-{{accident.id}}</h5>
+						<h5 class="card-title">Involved:</h5>
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Civi ID</th>
+      <th scope="col">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%for person in involved%}
+			<tr>
+			<td>{{person.civil_id}}</td>
+			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
+			</tr>
+			{% endfor%}
+		</tbody>
+
+			</table>
+			<p class="card-text" >Location: {{accident.location}}</p>
+			<p class="card-text">Date & Time: {{accident.date_time}}</p>
+			<div>
+			<h3>Accident</h3>
+			{% for img in car_images%}
+				<img src="{{img.accident_image.url}}"/>
+				{% endfor %}
+			</div>
+			<div>
+			<h3>Car Registration</h3>
+			{% for img in regis_images%}
+			<img src="{{img.regist_image.url}}"/>
+			{% endfor %}
+			</div>
+			{% if not accident.report %}
+			<a href="{% url 'report' accident.id %}">Generate report</a>
+			{% else %}
+			<h3> Report Details</h3>
+			<p>Detective:{{request.user.first_name}} {{request.user.last_name}}</p>
+			<p>Examiner:{{accident.report.examiner}}</p>
+			<p>Reported At:{{accident.report.reported_at}}</p>
+			{% endif %}
+		</div>		    
+</div>
+</div>
+{% endblock %}
