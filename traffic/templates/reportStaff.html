@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Report{% endblock title %}
+
+{% block content %}
+
+<br>
+
+<div class="container" style="    display: flex;
+    justify-content: center;">
+<div class="card text-center" style="width: 50rem;">
+  <h3 class="card-header bg-white">Generate Report</h3>
+  <div class="card-body">
+
+        <form action="{% url 'report' accident.id%}" method="POST" enctype="multipart/form-data">
+            <p>Accident {{accident.id}}</p>
+            <br>
+            {% csrf_token %}
+            {{form|crispy}}
+            <br>
+            <br>
+        <input type="submit" value="Report" class="btn btn-outline-warning">
+    </form>
+
+</div>
+</div>
+</div>
+
+
+
+
+	{% endblock %}
+
+

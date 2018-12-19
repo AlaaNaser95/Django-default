@@ -1,5 +1,6 @@
+import io
 from django.shortcuts import render, redirect
-from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm 
+from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm,ReportForm
 from django import forms
 from .models import Profile, RegistrationImage,CarImage,Accident
 from django.forms.models import modelform_factory
@@ -14,6 +15,13 @@ from django.contrib import messages
 
 # Create your views here.
 
+from django.utils import timezone    
+from io import BytesIO
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+
+from django.core.mail import EmailMessage
 def home(request):
     
     return render(request, 'home.html')
@@ -57,7 +65,6 @@ def accidentCreate(request):
 
 
         if accidentForm.is_valid()  and registrationFormset.is_valid() and car_images_form.is_valid():
-            print("Hello")
             accident=accidentForm.save()
             myProfile=Profile.objects.get(user_id=request.user.id)
             accident.involved.add(myProfile)
@@ -203,14 +210,76 @@ def accidentDetail(request, accident_id):
         return redirect('login')
     accident = Accident.objects.get(id=accident_id)
     #need to check if the user involved in the accident
-    
+    involved = accident.involved.all()
     car_images=CarImage.objects.filter(accident=accident)
     regis_images=RegistrationImage.objects.filter(accident=accident)
     # student=classroom.student_set.all().order_by('name','-exam_grade')
             # messages.success(request, "Successfully booked!")
     context = {
         "accident": accident,
+        "involved":involved,
         "car_images":car_images,
         "regis_images":regis_images
         }
     return render(request, 'accidentDetail.html', context)
+
+def accidentListStaff(request):
+    if request.user.is_anonymous:
+        return redirect('login')
+    if request.user.is_staff:
+        accidents=Accident.objects.all()
+        context={
+            'accidents':accidents,  
+        }
+        return render(request, 'accidentListStaff.html', context)
+    else:
+        return render(request, 'permission.html')
+
+def accidentDetailStaff(request, accident_id):
+    if request.user.is_anonymous:
+        return redirect('login')
+    if request.user.is_staff:
+        accident = Accident.objects.get(id=accident_id)
+        involved = accident.involved.all()
+        car_images=CarImage.objects.filter(accident=accident)
+        regis_images=RegistrationImage.objects.filter(accident=accident)
+        # student=classroom.student_set.all().order_by('name','-exam_grade')
+                # messages.success(request, "Successfully booked!")
+        context = {
+            "accident": accident,
+            "involved": involved,
+            "car_images":car_images,
+            "regis_images":regis_images
+            }
+        return render(request, 'accidentDetailStaff.html', context)
+    else:
+        return render(request, 'permission.html')
+
+def reportStaff(request, accident_id):
+    if request.user.is_anonymous:
+        return redirect('login')
+    if request.user.is_staff:
+        accident = Accident.objects.get(id=accident_id)
+        #need to check if the user involved in the accident
+        car_images=CarImage.objects.filter(accident=accident)
+        regis_images=RegistrationImage.objects.filter(accident=accident)
+        # student=classroom.student_set.all().order_by('name','-exam_grade')
+                # messages.success(request, "Successfully booked!")
+        form=ReportForm()
+        if(request.method=='POST'):
+            form=ReportForm(request.POST)
+            if form.is_valid():
+                report=form.save(commit=False)
+                report.accident=accident
+                report.save()
+            return redirect('staff-accident-list')
+        context = {
+            "form":form,
+            "accident": accident,
+            "car_images":car_images,
+            "regis_images":regis_images
+            }
+        return render(request, 'reportStaff.html', context)
+    else:
+        return render(request, 'permission.html')
+

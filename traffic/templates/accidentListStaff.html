@@ -8,16 +8,21 @@
       <th scope="col">Date & Time</th>
       <th scope="col">Location</th>
       <th scope="col">status</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   {% for accident in  accidents %}
   <tr>
-  <td>{{accident.id}}</td>
+  <td><a href="{% url 'staff-accident-detail' accident.id %}">{{accident.id}}</a></td>
   <td>{{accident.date_time}}</td>
   <td>{{accident.location}}</td>
   <td>{{accident.status}}</td>
+  <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning">view</a></td>
 </tr>
+
   {% endfor %}
+  </tbody>
+</table>
 </div>
 {% endblock %}
