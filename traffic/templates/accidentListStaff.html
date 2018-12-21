@@ -1,6 +1,15 @@
 {%extends "base.html"%}
 {%block content%}
-<div class="container">
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container" >
+  <h2 class="text-white">New Accidents</h2>
+  <div style="height:400px;overflow-y:scroll;">
   <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -11,18 +20,48 @@
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>
+  <tbody >
+  {% for accident in  new_accidents %}
+  <tr>
+  <td><a href="{% url 'staff-accident-detail' accident.id %}">{{accident.id}}</a></td>
+  <td>{{accident.date_time}}</td>
+  <td>{{accident.location}}</td>
+  <td>{{accident.status}}</td>
+  <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning">Generate Report</a></td>
+</tr>
+
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+
+
+<h2 class="text-white">Reported Accidents</h2>
+  <div style="height:400px;overflow-y:scroll;">
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Accident ID</th>
+      <th scope="col">Date & Time</th>
+      <th scope="col">Location</th>
+      <th scope="col">status</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody >
   {% for accident in  accidents %}
   <tr>
   <td><a href="{% url 'staff-accident-detail' accident.id %}">{{accident.id}}</a></td>
   <td>{{accident.date_time}}</td>
   <td>{{accident.location}}</td>
   <td>{{accident.status}}</td>
-  <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning">view</a></td>
+  <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning"> view</a></td>
 </tr>
-
   {% endfor %}
   </tbody>
 </table>
+</div>
 </div>
 {% endblock %}
