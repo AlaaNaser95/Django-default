@@ -1,8 +1,8 @@
 import io
 from django.shortcuts import render, redirect
-from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm,ReportForm
+from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm,ReportForm, ProfileAccidentForm
 from django import forms
-from .models import Profile, RegistrationImage,CarImage,Accident
+from .models import Profile, RegistrationImage,CarImage,Accident,Report
 from django.forms.models import modelform_factory
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -37,9 +37,10 @@ def accidentCreate(request):
         return redirect('login')
     GroupInvolvedFormSet = modelformset_factory(
             Profile,
-            form = forms.ModelForm,
-            fields=('civil_id',),
-            labels={'civil_id':'Civil id'},
+            form = ProfileAccidentForm,
+            fields=('civil_id','email'),
+            labels={'civil_id':'Civil id',
+            'email':'Email'},
             extra = 1
         )
     GroupRegistrationImageFormSet = modelformset_factory(
@@ -52,6 +53,7 @@ def accidentCreate(request):
     involvedFormset = GroupInvolvedFormSet(queryset=Profile.objects.none())
     registrationFormset = GroupRegistrationImageFormSet(queryset=RegistrationImage.objects.none())
     accidentForm=AccidentForm()
+
 
     car_images_form=CarImageForm()
     # car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
@@ -76,10 +78,13 @@ def accidentCreate(request):
             accident.involved.add(myProfile)
 
             for x in involvedFormset:
-                pop=x.save(commit=False)
-                p, created = Profile.objects.get_or_create(civil_id=pop.civil_id)
-                if p.civil_id:
-                    accident.involved.add(p)
+                if x.cleaned_data:
+                    pop=x.save(commit=False)
+                    profile,created=Profile.objects.get_or_create(civil_id=pop.civil_id)
+                    profile.email=pop.email
+                    profile.save()
+                    if profile.civil_id:
+                        accident.involved.add(profile)
 
             for x in registrationFormset:
                 if x.cleaned_data:
@@ -118,7 +123,7 @@ def user_register(request):
             pop.save()
             login(request, user)
             # Where you want to go after a successful signup
-            return redirect('profile')
+            return redirect('accident-report')
     context = {
         "form":form,
         "popForm":popForm,
@@ -180,7 +185,7 @@ def user_login(request):
             if auth_user is not None:
                 login(request, auth_user)
                 # Where you want to go after a successful login
-                return redirect('profile')
+                return redirect('accident-report')
 
     context = {
         "form":form
@@ -192,6 +197,10 @@ def user_logout(request):
     logout(request)
     # Where you would like to redirect the user after successfully logging out
     return redirect("home")
+
+def report(request):
+    # Where you would like to redirect the user after successfully logging out
+    return render(request, 'report.html')
 
 
 def email(request,context):
@@ -236,9 +245,11 @@ def accidentListStaff(request):
     if request.user.is_anonymous:
         return redirect('login')
     if request.user.is_staff:
-        accidents=Accident.objects.all()
+        accidents=Accident.objects.exclude(report= None)
+        new_accidents=Accident.objects.filter(report= None)
         context={
-            'accidents':accidents,  
+            'accidents':accidents, 
+            'new_accidents': new_accidents, 
         }
         return render(request, 'accidentListStaff.html', context)
     else:
@@ -252,10 +263,21 @@ def accidentDetailStaff(request, accident_id):
         involved = accident.involved.all()
         car_images=CarImage.objects.filter(accident=accident)
         regis_images=RegistrationImage.objects.filter(accident=accident)
+        form=ReportForm()
+        if(request.method=='POST'):
+            form=ReportForm(request.POST)
+            if form.is_valid():
+                report=form.save(commit=False)
+                report.accident=accident
+                report.detective=request.user
+                report.save()
+                messages.success(request, "Accident"+str(accident_id)+" is reported successfully")
+                return redirect('staff-accident-list')
         # student=classroom.student_set.all().order_by('name','-exam_grade')
                 # messages.success(request, "Successfully booked!")
         context = {
             "accident": accident,
+            "form":form,
             "involved": involved,
             "car_images":car_images,
             "regis_images":regis_images
@@ -264,33 +286,36 @@ def accidentDetailStaff(request, accident_id):
     else:
         return render(request, 'permission.html')
 
-def reportStaff(request, accident_id):
-    if request.user.is_anonymous:
-        return redirect('login')
-    if request.user.is_staff:
-        accident = Accident.objects.get(id=accident_id)
-        #need to check if the user involved in the accident
-        car_images=CarImage.objects.filter(accident=accident)
-        regis_images=RegistrationImage.objects.filter(accident=accident)
-        # student=classroom.student_set.all().order_by('name','-exam_grade')
-                # messages.success(request, "Successfully booked!")
-        form=ReportForm()
-        if(request.method=='POST'):
-            form=ReportForm(request.POST)
-            if form.is_valid():
-                report=form.save(commit=False)
-                report.accident=accident
-                report.save()
-            return redirect('staff-accident-list')
-        context = {
-            "form":form,
-            "accident": accident,
-            "car_images":car_images,
-            "regis_images":regis_images
-            }
-        return render(request, 'reportStaff.html', context)
-    else:
-        return render(request, 'permission.html')
+
+# def reportStaff(request, accident_id):
+#     if request.user.is_anonymous:
+#         return redirect('login')
+#     if request.user.is_staff:
+#         accident = Accident.objects.get(id=accident_id)
+#         #need to check if the user involved in the accident
+#         car_images=CarImage.objects.filter(accident=accident)
+#         regis_images=RegistrationImage.objects.filter(accident=accident)
+#         # student=classroom.student_set.all().order_by('name','-exam_grade')
+#                 # messages.success(request, "Successfully booked!")
+#         form=ReportForm()
+#         if(request.method=='POST'):
+#             form=ReportForm(request.POST)
+#             if form.is_valid():
+#                 report=form.save(commit=False)
+#                 report.accident=accident
+#                 report.detective=request.user
+#                 report.save()
+#                 messages.success(request, "Accident"+str(accident_id)+" is reported successfully")
+#                 return redirect('staff-accident-list')
+#         context = {
+#             "form":form,
+#             "accident": accident,
+#             "car_images":car_images,
+#             "regis_images":regis_images
+#             }
+#         return render(request, 'reportStaff.html', context)
+#     else:
+#         return render(request, 'permission.html')
 
 def compliance(request,accident_id):
     accident=Accident.objects.get(id=accident_id)
@@ -303,6 +328,7 @@ def declined(request,accident_id):
     accident.status='Declined'
     accident.save()
     return render(request, 'decline.html')
+
 
 def send_pdf(request,accident):
     involved = accident.involved.all()
@@ -325,3 +351,9 @@ def send_pdf(request,accident):
         )
     msg.attach('file.pdf', post_pdf, 'application/pdf')
     msg.send()
+
+
+def report(request):
+   # Where you would like to redirect the user after successfully logging out
+   return render(request, 'report.html')
+

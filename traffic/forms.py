@@ -6,9 +6,10 @@ from .models import Accident,Profile, CarImage,Report
 
 
 class AccidentForm(forms.ModelForm):
+
     class Meta:
         model = Accident
-        fields=[ "location_longitude", "location_latitude" ]
+        fields=[ "location_longitude", "location_latitude", "description" ]
         widgets = {'location_longitude': forms.HiddenInput(),
         'location_latitude': forms.HiddenInput()}
             
@@ -25,6 +26,8 @@ class CarImageForm(forms.ModelForm):
 
 
 class UserRegister(forms.ModelForm):
+    first_name=forms.CharField(max_length=30,required=True)
+    last_name=forms.CharField(max_length=150,required=True)
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email' ,'password']
@@ -41,6 +44,12 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['civil_id', 'phone_no']
+
+class ProfileAccidentForm(forms.ModelForm):
+    email=forms.EmailField(max_length=254, required=True)
+    class Meta:
+        model = Profile
+        fields = ['civil_id', 'email']
     # def clean(self):
     #     cleaned_data = super(ProfileForm, self).clean()
     #     # additional cleaning here
@@ -49,4 +58,4 @@ class ProfileForm(forms.ModelForm):
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
-        fields = ['detective','examiner','comment']
+        fields = ['examiner','comment']
