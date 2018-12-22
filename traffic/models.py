@@ -49,6 +49,7 @@ class Accident(models.Model):
     }
     status=models.CharField(max_length=120,choices=STATUS,default='New')
     status_for_staff=models.CharField(max_length=120,blank=True,null=True,choices=STATUS_FOR_STAFF)
+    description= models.TextField(default="accident")
 
 class CarImage(models.Model):
     accident_image=models.FileField(validators=[validate_file_extension])

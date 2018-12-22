@@ -1,7 +1,9 @@
 {%extends "base.html"%}
 {%block content%}
 {% load crispy_forms_tags %}
-<div class="container" >
+<div class="container">
+<div class="row" >
+<div class="col">
 	<div class="card text-center">
 		<div class="card-body">
 			<h5 class="card-title">Accident-{{accident.id}}</h5>
@@ -26,23 +28,36 @@
 			<p class="card-text" >Location: {{accident.location}}</p>
 			<p class="card-text">Date & Time: {{accident.date_time}}</p>
 			<div>
+<h5 class="card-title">Description:</h5>
+<p>{{accident.description}}</p>
+
 			<h3>Accident</h3>
+			<div class="row">
 			{% for img in car_images%}
-				<img src="{{img.accident_image.url}}"/>
+			<div class="col">
+				<img src="{{img.accident_image.url}}" width="300px"/>
+			</div>
 				{% endfor %}
 			</div>
-			<div>
+			</div>
+			<div >
 			<h3>Car Registration</h3>
+			<div class="row">
 			{% for img in regis_images%}
-			<img src="{{img.regist_image.url}}"/>
+			<div class="col">
+			<img src="{{img.regist_image.url}}" width="300px"/>
+		</div>
 			{% endfor %}
+		</div>
 			</div>
 			{% if not accident.report %}
 			<br>
-
-<div class="container" style="    display: flex;
-    justify-content: center;">
-<div class="card text-center" style="width: 50rem;">
+</div>
+</div>
+</div>
+<div class="col">
+<div class="container" style="display: flex;justify-content: center;">
+<div class="card text-center">
   <h3 class="card-header bg-white">Generate Report</h3>
   <div class="card-body">
 
@@ -69,4 +84,5 @@
 		</div>		    
 </div>
 </div>
+
 {% endblock %}
