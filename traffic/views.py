@@ -12,21 +12,24 @@ from django.forms import modelformset_factory
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
-
+from easy_pdf.rendering import render_to_pdf
 
 # Create your views here.
 
 from django.utils import timezone    
 from io import BytesIO
 from django.http import FileResponse
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter
+
 
 from django.core.mail import EmailMessage
 
 def home(request):
     
     return render(request, 'home.html')
+
+def trial(request):
+    
+    return render(request, 'trial1.html')    
 
 
 def accidentCreate(request):
@@ -95,6 +98,7 @@ def accidentCreate(request):
             regist_images=accident.save()
             messages.success(request, "Successfully Submitted!")
             email(request,accident)
+            send_pdf(request,accident)
             return redirect('home')
     context={
         "involvedFormset":involvedFormset,
@@ -323,9 +327,33 @@ def declined(request,accident_id):
     accident=Accident.objects.get(id=accident_id)
     accident.status='Declined'
     accident.save()
-    return render(request, 'decline.html')        
+    return render(request, 'decline.html')
+
+
+def send_pdf(request,accident):
+    involved = accident.involved.all()
+    car_images=CarImage.objects.filter(accident=accident)
+    regis_images=RegistrationImage.objects.filter(accident=accident)
+        # student=classroom.student_set.all().order_by('name','-exam_grade')
+                # messages.success(request, "Successfully booked!")
+    post_pdf = render_to_pdf(
+        'report.html',
+        { "accident": accident,
+            "involved": involved,
+            "car_images":car_images,
+            "regis_images":regis_images},
+)
+    msg = EmailMessage(
+        'Hello', #subject
+        'Body goes here', #content
+        '', #from
+        ['sazidahossain@gmail.com'] #to
+        )
+    msg.attach('file.pdf', post_pdf, 'application/pdf')
+    msg.send()
 
 
 def report(request):
    # Where you would like to redirect the user after successfully logging out
    return render(request, 'report.html')
+

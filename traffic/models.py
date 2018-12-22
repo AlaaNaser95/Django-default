@@ -24,13 +24,9 @@ class Accident(models.Model):
     ('Expired','expired'),
     
     }
-    STATUS_FOR_STAFF={
-    ('Accepted','accepted'),
-    ('Declined','declined'),
-    }
+  
     status=models.CharField(max_length=120,choices=STATUS,default='New')
-    status_for_staff=models.CharField(max_length=120,blank=True,null=True,choices=STATUS_FOR_STAFF)
-
+ 
 class CarImage(models.Model):
     accident_image=models.FileField(validators=[validate_file_extension])
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
