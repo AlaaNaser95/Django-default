@@ -1,5 +1,6 @@
 {%extends "base.html"%}
 {%block content%}
+
 <div class="container" >
 	<h1 class="text-white " style="text-align:left;">Accident Details</h1>
 	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
@@ -14,6 +15,36 @@
 			<br>
 			<p class="card-text text-white">{{accident.description}}</p>
 			<br>
+
+	<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
+	<div class="card text-center">
+		<div class="card-body">
+			<h5 class="card-title">Accident-{{accident.id}}</h5>
+
+			<h5 class="card-title">Involved:</h5>
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Civi ID</th>
+      <th scope="col">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+  {%for person in involved%}
+			<tr>
+			<td>{{person.civil_id}}</td>
+			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
+			</tr>
+			{% endfor%}
+		</tbody>
+
+			</table>
+		
+
+			<p class="card-text" >Location: {{accident.location}}</p>
+
+			<p class="card-text">{{accident.date_time}}</p>
+
 			<div>
 				<h3 class="text-white bg-dark">Accident</h3>
 				<br>
@@ -35,5 +66,17 @@
 		    
 </div>
 </div>
+<script>
+
+function showPosition(location_longitude,location_latitude) {
+console.log("Hello")       
+        var latlon = location_latitude + "," + location_longitude;
+        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
+
+document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+   
+}
+
+</script>
 
 {% endblock %}

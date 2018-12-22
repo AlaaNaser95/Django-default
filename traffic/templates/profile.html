@@ -42,8 +42,9 @@
   <td>{{accident.status}}</td>
   <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">view</a></td>
 </tr>
-
   {% endfor %}
+</tbody>
+</table>
 </div>  
 
 {% endblock %}

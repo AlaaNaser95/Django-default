@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.widgets import HiddenInput
-from .models import Accident,Profile, CarImage
+from .models import Accident,Profile, CarImage,Report
 
 
 
@@ -41,8 +41,12 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['civil_id', 'phone_no']
-    def clean(self):
-        cleaned_data = super(ProfileForm, self).clean()
-        # additional cleaning here
-        return cleaned_data
+    # def clean(self):
+    #     cleaned_data = super(ProfileForm, self).clean()
+    #     # additional cleaning here
+    #     return cleaned_data
 
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['examiner','comment']

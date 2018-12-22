@@ -1,7 +1,8 @@
+import io
 from django.shortcuts import render, redirect
-from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm 
+from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm,ReportForm
 from django import forms
-from .models import Profile, RegistrationImage,CarImage,Accident
+from .models import Profile, RegistrationImage,CarImage,Accident,Report
 from django.forms.models import modelform_factory
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -12,7 +13,16 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
 
+
 # Create your views here.
+
+from django.utils import timezone    
+from io import BytesIO
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
+
+from django.core.mail import EmailMessage
 
 def home(request):
     
@@ -55,10 +65,10 @@ def accidentCreate(request):
                 queryset=RegistrationImage.objects.none(),
             )
         car_images_form=CarImageForm(request.POST,request.FILES)
+        print (involvedFormset)
 
 
         if accidentForm.is_valid()  and registrationFormset.is_valid() and car_images_form.is_valid():
-            print("Hello")
             accident=accidentForm.save()
             myProfile=Profile.objects.get(user_id=request.user.id)
             accident.involved.add(myProfile)
@@ -66,7 +76,8 @@ def accidentCreate(request):
             for x in involvedFormset:
                 pop=x.save(commit=False)
                 p, created = Profile.objects.get_or_create(civil_id=pop.civil_id)
-                accident.involved.add(p)
+                if p.civil_id:
+                    accident.involved.add(p)
 
             for x in registrationFormset:
                 if x.cleaned_data:
@@ -78,8 +89,8 @@ def accidentCreate(request):
                 car_images=CarImage.objects.create(accident_image=file,accident=accident)
                 car_images.save()
             regist_images=accident.save()
-            # sendemail(request.user,followers)
             messages.success(request, "Successfully Submitted!")
+            email(request,accident)
             return redirect('home')
     context={
         "involvedFormset":involvedFormset,
@@ -184,9 +195,9 @@ def report(request):
     return render(request, 'report.html')
 
 
-def email(request):
+def email(request,context):
     subject = 'Email sent'     
-    html_message = render_to_string('trial.html')      
+    html_message = render_to_string('trial.html',{'context':context})      
     plain_message = strip_tags(html_message)     
     
     send_mail(subject, plain_message, '', ['sazidahossain@gmail.com'], html_message=html_message)
@@ -208,14 +219,106 @@ def accidentDetail(request, accident_id):
         return redirect('login')
     accident = Accident.objects.get(id=accident_id)
     #need to check if the user involved in the accident
-    
+    involved = accident.involved.all()
     car_images=CarImage.objects.filter(accident=accident)
     regis_images=RegistrationImage.objects.filter(accident=accident)
     # student=classroom.student_set.all().order_by('name','-exam_grade')
             # messages.success(request, "Successfully booked!")
     context = {
         "accident": accident,
+        "involved":involved,
         "car_images":car_images,
         "regis_images":regis_images
         }
     return render(request, 'accidentDetail.html', context)
+
+
+def accidentListStaff(request):
+    if request.user.is_anonymous:
+        return redirect('login')
+    if request.user.is_staff:
+        accidents=Accident.objects.exclude(report= None)
+        new_accidents=Accident.objects.filter(report= None)
+        context={
+            'accidents':accidents, 
+            'new_accidents': new_accidents, 
+        }
+        return render(request, 'accidentListStaff.html', context)
+    else:
+        return render(request, 'permission.html')
+
+def accidentDetailStaff(request, accident_id):
+    if request.user.is_anonymous:
+        return redirect('login')
+    if request.user.is_staff:
+        accident = Accident.objects.get(id=accident_id)
+        involved = accident.involved.all()
+        car_images=CarImage.objects.filter(accident=accident)
+        regis_images=RegistrationImage.objects.filter(accident=accident)
+        form=ReportForm()
+        if(request.method=='POST'):
+            form=ReportForm(request.POST)
+            if form.is_valid():
+                report=form.save(commit=False)
+                report.accident=accident
+                report.detective=request.user
+                report.save()
+                messages.success(request, "Accident"+str(accident_id)+" is reported successfully")
+                return redirect('staff-accident-list')
+        # student=classroom.student_set.all().order_by('name','-exam_grade')
+                # messages.success(request, "Successfully booked!")
+        context = {
+            "accident": accident,
+            "form":form,
+            "involved": involved,
+            "car_images":car_images,
+            "regis_images":regis_images
+            }
+        return render(request, 'accidentDetailStaff.html', context)
+    else:
+        return render(request, 'permission.html')
+
+
+# def reportStaff(request, accident_id):
+#     if request.user.is_anonymous:
+#         return redirect('login')
+#     if request.user.is_staff:
+#         accident = Accident.objects.get(id=accident_id)
+#         #need to check if the user involved in the accident
+#         car_images=CarImage.objects.filter(accident=accident)
+#         regis_images=RegistrationImage.objects.filter(accident=accident)
+#         # student=classroom.student_set.all().order_by('name','-exam_grade')
+#                 # messages.success(request, "Successfully booked!")
+#         form=ReportForm()
+#         if(request.method=='POST'):
+#             form=ReportForm(request.POST)
+#             if form.is_valid():
+#                 report=form.save(commit=False)
+#                 report.accident=accident
+#                 report.detective=request.user
+#                 report.save()
+#                 messages.success(request, "Accident"+str(accident_id)+" is reported successfully")
+#                 return redirect('staff-accident-list')
+#         context = {
+#             "form":form,
+#             "accident": accident,
+#             "car_images":car_images,
+#             "regis_images":regis_images
+#             }
+#         return render(request, 'reportStaff.html', context)
+#     else:
+#         return render(request, 'permission.html')
+
+def compliance(request,accident_id):
+    accident=Accident.objects.get(id=accident_id)
+    accident.status='Pending'
+    accident.save()
+    return render(request, 'compliance.html') 
+
+def declined(request,accident_id):
+    accident=Accident.objects.get(id=accident_id)
+    accident.status='Declined'
+    accident.save()
+    return render(request, 'decline.html')        
+
+
