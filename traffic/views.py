@@ -1,6 +1,6 @@
 import io
 from django.shortcuts import render, redirect
-from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm,ReportForm
+from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm,ReportForm, ProfileAccidentForm
 from django import forms
 from .models import Profile, RegistrationImage,CarImage,Accident,Report
 from django.forms.models import modelform_factory
@@ -34,9 +34,10 @@ def accidentCreate(request):
         return redirect('login')
     GroupInvolvedFormSet = modelformset_factory(
             Profile,
-            form = forms.ModelForm,
-            fields=('civil_id',),
-            labels={'civil_id':'Civil id'},
+            form = ProfileAccidentForm,
+            fields=('civil_id','email'),
+            labels={'civil_id':'Civil id',
+            'email':'Email'},
             extra = 1
         )
     GroupRegistrationImageFormSet = modelformset_factory(
@@ -74,10 +75,13 @@ def accidentCreate(request):
             accident.involved.add(myProfile)
 
             for x in involvedFormset:
-                pop=x.save(commit=False)
-                p, created = Profile.objects.get_or_create(civil_id=pop.civil_id)
-                if p.civil_id:
-                    accident.involved.add(p)
+                if x.cleaned_data:
+                    pop=x.save(commit=False)
+                    profile,created=Profile.objects.get_or_create(civil_id=pop.civil_id)
+                    profile.email=pop.email
+                    profile.save()
+                    if profile.civil_id:
+                        accident.involved.add(profile)
 
             for x in registrationFormset:
                 if x.cleaned_data:
@@ -115,7 +119,7 @@ def user_register(request):
             pop.save()
             login(request, user)
             # Where you want to go after a successful signup
-            return redirect('profile')
+            return redirect('accident-report')
     context = {
         "form":form,
         "popForm":popForm,
@@ -322,3 +326,6 @@ def declined(request,accident_id):
     return render(request, 'decline.html')        
 
 
+def report(request):
+   # Where you would like to redirect the user after successfully logging out
+   return render(request, 'report.html')

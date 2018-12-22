@@ -9,6 +9,7 @@ class Profile(models.Model):
     user=models.OneToOneField(User,blank=True,null=True,on_delete=models.CASCADE)
     civil_id = models.CharField(max_length=120)
     phone_no= models.CharField(max_length=120,blank=True,null=True)
+    email=models.EmailField(max_length=254,blank=True,null=True)
 
 class Accident(models.Model):
     involved= models.ManyToManyField(Profile)
