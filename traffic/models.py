@@ -10,31 +10,12 @@ class Profile(models.Model):
     civil_id = models.CharField(max_length=120)
     phone_no= models.CharField(max_length=120,blank=True,null=True)
 
-
-
-
-
-
-# @receiver(post_save, sender=User)
-
-# def create_user_population(sender, instance, created, **kwargs):
-#     if created:
-#         Population.objects.create(user=instance)
-
-
-
-# @receiver(post_save, sender=User)
-
-# def save_user_population(sender, instance, **kwargs):
-#     instance.population.save()
-
-    
-
 class Accident(models.Model):
     involved= models.ManyToManyField(Profile)
     location_longitude = models.DecimalField(max_digits=9, default=1, decimal_places=6)
     location_latitude = models.DecimalField(max_digits=9, default=1,decimal_places=6)
     date_time = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(default="")
     STATUS={
     ('Pending','pending'),
     ('Accepted','accepted'),
@@ -49,3 +30,15 @@ class CarImage(models.Model):
 class RegistrationImage(models.Model):
     regist_image=models.ImageField()
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
+
+
+
+
+
+
+
+
+
+
+
+
