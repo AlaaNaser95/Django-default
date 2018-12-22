@@ -18,7 +18,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,reportStaff,compliance,declined
+from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,reportStaff,compliance,declined,send_pdf,trial
 
 
 
@@ -43,6 +43,8 @@ urlpatterns = [
 
     path('accident/compliance/<int:accident_id>/', compliance,name='accident-compliance'),
     path('accident/decline/<int:accident_id>/', declined,name='accident-decline'),
+    path('sendPdf/', send_pdf,name='accident-pdf'),
+    path('trial/', trial,name='accident-trial')
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
