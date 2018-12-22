@@ -50,6 +50,7 @@ def accidentCreate(request):
     registrationFormset = GroupRegistrationImageFormSet(queryset=RegistrationImage.objects.none())
     accidentForm=AccidentForm()
 
+
     car_images_form=CarImageForm()
     # car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
     """In case Of Post"""
@@ -176,7 +177,7 @@ def user_login(request):
             if auth_user is not None:
                 login(request, auth_user)
                 # Where you want to go after a successful login
-                return redirect('profile')
+                return redirect('accident-report')
 
     context = {
         "form":form
@@ -188,6 +189,10 @@ def user_logout(request):
     logout(request)
     # Where you would like to redirect the user after successfully logging out
     return redirect("home")
+
+def report(request):
+    # Where you would like to redirect the user after successfully logging out
+    return render(request, 'report.html')
 
 
 def email(request,context):
