@@ -98,7 +98,6 @@ def accidentCreate(request):
             regist_images=accident.save()
             messages.success(request, "Successfully Submitted!")
             email(request,accident)
-            send_pdf(request,accident)
             return redirect('home')
     context={
         "involvedFormset":involvedFormset,
@@ -185,7 +184,11 @@ def user_login(request):
             if auth_user is not None:
                 login(request, auth_user)
                 # Where you want to go after a successful login
-                return redirect('accident-report')
+                if request.user.is_staff:
+                    return redirect('staff-accident-list')
+                else:
+                    return redirect('accident-report')
+                    
 
     context = {
         "form":form
@@ -272,6 +275,7 @@ def accidentDetailStaff(request, accident_id):
                 report.detective=request.user
                 report.save()
                 messages.success(request, "Accident"+str(accident_id)+" is reported successfully")
+                send_pdf(request,accident)
                 return redirect('staff-accident-list')
         # student=classroom.student_set.all().order_by('name','-exam_grade')
                 # messages.success(request, "Successfully booked!")
@@ -336,16 +340,16 @@ def send_pdf(request,accident):
     regis_images=RegistrationImage.objects.filter(accident=accident)
         # student=classroom.student_set.all().order_by('name','-exam_grade')
                 # messages.success(request, "Successfully booked!")
+
     post_pdf = render_to_pdf(
-        'report.html',
+        'report_email.html',
         { "accident": accident,
             "involved": involved,
-            "car_images":car_images,
-            "regis_images":regis_images},
+            "user":request.user},
 )
     msg = EmailMessage(
-        'Hello', #subject
-        'Body goes here', #content
+        'Approved report', #subject
+        'Your application was approved and below is the printable report.', #content
         '', #from
         ['sazidahossain@gmail.com'] #to
         )

@@ -2,10 +2,25 @@
 {%block content%}
 {% load crispy_forms_tags %}
 <div class="container" >
+	<h1 class="text-white " style="text-align:left;">Accident Details</h1>
+	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
+		<div class="card-body">
+			<h1 class="card bg-danger text-white text-center">Accident-{{accident.id}}</h1>
+			<br>
+			<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
+			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location</h3> <div class="text-center" id="mapholder"></div></p>
+			<br>
+			<p class="card-text text-white">Date & Time: {{accident.date_time}}</p>
+			<br>
+			<h3 class="bg-dark text-white">Description</h3>
+			<br>
+			<p class="card-text text-white">{{accident.description}}</p>
+			<br>
+
 	<div class="card text-center">
 		<div class="card-body">
-			<h5 class="card-title">Accident-{{accident.id}}</h5>
-						<h5 class="card-title">Involved:</h5>
+
+			<h5 class="card-title">Involved:</h5>
   <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -23,20 +38,31 @@
 		</tbody>
 
 			</table>
-			<p class="card-text" >Location: {{accident.location}}</p>
-			<p class="card-text">Date & Time: {{accident.date_time}}</p>
+		
+
+			<p class="card-text">{{accident.date_time}}</p>
+
 			<div>
-			<h3>Accident</h3>
+				<h3 class="text-white bg-dark">Accident Images</h3>
+				<br>
 			{% for img in car_images%}
-				<img src="{{img.accident_image.url}}"/>
+				<img src="{{img.accident_image.url}}" width="280" height="300"/>
+				{% endfor %}
+				<br>
+			</div>
+			<div>
+				<br>
+				<h3 class="text-white bg-dark">Car Registration Images</h3>
+				<br>
+				{% for img in regis_images%}
+				<img src="{{img.regist_image.url}}" width="380" height="400"/>
+				
 				{% endfor %}
 			</div>
-			<div>
-			<h3>Car Registration</h3>
-			{% for img in regis_images%}
-			<img src="{{img.regist_image.url}}"/>
-			{% endfor %}
-			</div>
+		</div>
+		    
+</div>
+</div>
 			{% if not accident.report %}
 			<br>
 
@@ -69,4 +95,16 @@
 		</div>		    
 </div>
 </div>
+<script>
+
+function showPosition(location_longitude,location_latitude) {
+console.log("Hello")       
+        var latlon = location_latitude + "," + location_longitude;
+        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
+
+document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+   
+}
+
+</script>
 {% endblock %}

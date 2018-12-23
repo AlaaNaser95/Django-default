@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,reportStaff,compliance,declined,report,send_pdf,trial
+from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,trial
 
 
 
