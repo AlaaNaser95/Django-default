@@ -12,8 +12,8 @@
             <div class="panel panel-primary">
                 <!-- Default panel contents -->
                 <div class="panel-heading">
-                    <h2 class="panel-title">
-                        Violations Report
+                    <h2 class="panel-title text-center">
+                        <img src="http://www.mof.gov.kw/MOFAuction/logoAuction/moi.png" width="80" height="80"/> Violations Report
                     </h2>
                 </div>
                 <div class="panel-body">
@@ -27,7 +27,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Civi ID</th>
+                                <th>Civil ID</th>
                                 <th>Name</th>
                                 
                             </tr>
@@ -36,7 +36,7 @@
                             {%for person in involved%}
                             <tr>
                             <td>{{person.civil_id}}</td>
-                            <td>{{person.user.firstname}} {{person.user.lastname}}</td>
+                            <td>{{person.user.first_name}} {{person.user.last_name}}</td>
                             </tr>
                             {% endfor%}
                         </tbody>
@@ -45,9 +45,10 @@
                 </ul>
             <div>
             <h3> Report Details</h3>
-            <p>Detective:{{user.username}}</p>
-            <p>Examiner:{{accident.report.examiner}}</p>
-            <p>Reported At:{{accident.report.reported_at}}</p>
+            <p>Detective: {{user.username}}</p>
+            <p>Examiner: {{accident.report.examiner}}</p>
+            <p>Reported At: {{accident.report.reported_at}}</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTT9EO5LfDYYLdUhg3ZV5FN4TH6gC_awyipfN8FXdGdWuzNwuY" width="80" height="80"/>
             </div>
             </div>
         </div>

@@ -26,7 +26,6 @@
     <tr>
       <th scope="col">Accident ID</th>
       <th scope="col">Date & Time</th>
-      <th scope="col">Location</th>
       <th scope="col">status</th>
       <th scope="col"></th>
     </tr>
@@ -38,7 +37,6 @@
     
   <td><a href="{% url 'accident-detail' accident.id %}">{{accident.id}}</a></td> 
   <td>{{accident.date_time}}</td>
-  <td><div id="map"></div></td>
   <td>{{accident.status}}</td>
   <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">view</a></td>
 </tr>

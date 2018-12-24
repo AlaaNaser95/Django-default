@@ -5,27 +5,26 @@
 <br>
 <br>
 <br>
-<br>
-<br>
+
 <div class="container" >
+
   <h2 class="text-white">New Accidents</h2>
+  <div class="card" style="background-color:rgba(169,169,169, 0.3)">
   <div style="height:400px;overflow-y:scroll;">
-  <table class="table">
-  <thead class="thead-dark">
+  <table class="table table-borderless">
+  <thead class="thead bg-danger text-white">
     <tr>
       <th scope="col">Accident ID</th>
       <th scope="col">Date & Time</th>
-      <th scope="col">Location</th>
       <th scope="col">status</th>
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody >
+  <tbody class="text-white" >
   {% for accident in  new_accidents %}
   <tr>
   <td><a href="{% url 'staff-accident-detail' accident.id %}">{{accident.id}}</a></td>
   <td>{{accident.date_time}}</td>
-  <td>{{accident.location}}</td>
   <td>{{accident.status}}</td>
   <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning">Generate Report</a></td>
 </tr>
@@ -34,34 +33,35 @@
   </tbody>
 </table>
 </div>
+</div>
 
-
-
+<br>
+<br>
 
 <h2 class="text-white">Reported Accidents</h2>
+<div class="card" style="background-color:rgba(169,169,169, 0.3)">
   <div style="height:400px;overflow-y:scroll;">
-  <table class="table">
-  <thead class="thead-dark">
+  <table class="table table-borderless">
+  <thead class="thead bg-dark text-white">
     <tr>
       <th scope="col">Accident ID</th>
       <th scope="col">Date & Time</th>
-      <th scope="col">Location</th>
-      <th scope="col">status</th>
+      <th scope="col">Status</th>
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody >
+  <tbody class="text-white">
   {% for accident in  accidents %}
   <tr>
   <td><a href="{% url 'staff-accident-detail' accident.id %}">{{accident.id}}</a></td>
   <td>{{accident.date_time}}</td>
-  <td>{{accident.location}}</td>
   <td>{{accident.status}}</td>
   <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning"> view</a></td>
 </tr>
   {% endfor %}
   </tbody>
 </table>
+</div>
 </div>
 </div>
 {% endblock %}

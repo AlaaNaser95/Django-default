@@ -207,7 +207,7 @@ def report(request):
 
 
 def email(request,context):
-    subject = 'Email sent'     
+    subject = 'Accident'     
     html_message = render_to_string('trial.html',{'context':context})      
     plain_message = strip_tags(html_message)     
     
@@ -276,6 +276,8 @@ def accidentDetailStaff(request, accident_id):
                 report.save()
                 messages.success(request, "Accident"+str(accident_id)+" is reported successfully")
                 send_pdf(request,accident)
+                accident.status='Accepted'
+                accident.save()
                 return redirect('staff-accident-list')
         # student=classroom.student_set.all().order_by('name','-exam_grade')
                 # messages.success(request, "Successfully booked!")

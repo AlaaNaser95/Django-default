@@ -10,7 +10,7 @@
 			<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
 			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location</h3> <div class="text-center" id="mapholder"></div></p>
 			<br>
-			<p class="card-text text-white">Date & Time: {{accident.date_time}}</p>
+			<p class="card-text text-white"><strong>Date & Time: </strong>{{accident.date_time}}</p>
 			<br>
 			<h3 class="bg-dark text-white">Description</h3>
 			<br>
@@ -24,7 +24,7 @@
   <table class="table">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Civi ID</th>
+      <th scope="col">Civil ID</th>
       <th scope="col">Name</th>
     </tr>
   </thead>
@@ -87,10 +87,12 @@
 </div>
 
 			{% else %}
-			<h3> Report Details</h3>
-			<p>Detective:{{request.user.first_name}} {{request.user.last_name}}</p>
-			<p>Examiner:{{accident.report.examiner}}</p>
-			<p>Reported At:{{accident.report.reported_at}}</p>
+			<h3 class="text-white bg-dark"> Report Details</h3>
+			<br>
+			<p class="card-text text-white" ><strong>Detective: </strong>{{request.user.first_name}} {{request.user.last_name}}</p>
+
+			<p class="card-text text-white" ><strong>Examiner: </strong>{{accident.report.examiner}}</p>
+			<p class="card-text text-white" ><strong>Reported At: </strong>{{accident.report.reported_at}}</p>
 			{% endif %}
 		</div>		    
 </div>
