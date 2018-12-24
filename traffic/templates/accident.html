@@ -14,7 +14,7 @@
   <h3 class="card-header bg-white">Report an Accident</h3>
   <div class="card-body">
 
-        <form action="{% url 'create-accident' %}" method="POST" enctype="multipart/form-data">
+        <form action="{% url 'create-accident' involved %}" method="POST" enctype="multipart/form-data">
             <p>Please Provide Involved People Civil ID Numbers</p>
             <br>
             {% csrf_token %}
