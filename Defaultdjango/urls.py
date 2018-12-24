@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,trial
+from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,trial,involved
 
 
 
@@ -27,7 +27,7 @@ from traffic.views import accidentCreate, user_login, user_register, email, acci
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accident/form/', accidentCreate,name='create-accident'),
+    path('accident/form/<int:involved>/', accidentCreate,name='create-accident'),
     path('login/', user_login,name='login'),
     path('register/', user_register,name='register'),
     path('home/', home,name='home'),
@@ -39,6 +39,7 @@ urlpatterns = [
     path('report/', report,name='accident-report'),
     path('profile/update/', updateProfile,name='update-profile'),
     path('report/', report,name='accident-report'),
+    path('accident/involved/', involved,name='involved'),
 
 
     path('staff/accident/list', accidentListStaff,name='staff-accident-list'),

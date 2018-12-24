@@ -32,7 +32,7 @@ def trial(request):
     return render(request, 'trial1.html')    
 
 
-def accidentCreate(request):
+def accidentCreate(request,involved=2):
     if request.user.is_anonymous:
         return redirect('login')
     GroupInvolvedFormSet = modelformset_factory(
@@ -41,14 +41,14 @@ def accidentCreate(request):
             fields=('civil_id','email'),
             labels={'civil_id':'Civil id',
             'email':'Email'},
-            extra = 1
+            extra = involved-1
         )
     GroupRegistrationImageFormSet = modelformset_factory(
             RegistrationImage,
             form = forms.ModelForm,
             fields=('regist_image',),
             labels={'regist_image':'Involved Car registration'},
-            extra = 2
+            extra = involved
         )
     involvedFormset = GroupInvolvedFormSet(queryset=Profile.objects.none())
     registrationFormset = GroupRegistrationImageFormSet(queryset=RegistrationImage.objects.none())
@@ -100,6 +100,7 @@ def accidentCreate(request):
             email(request,accident)
             return redirect('home')
     context={
+    "involved":involved,
         "involvedFormset":involvedFormset,
         "accidentForm":accidentForm,
         "registrationFormset":registrationFormset,
@@ -161,7 +162,7 @@ def updateProfile(request):
             prof_form.save()
             # login(request.user)
             # messages.success(request, "Successfully Updated!")
-            return redirect('create-accident')    
+            return redirect('home')    
     
     context = {
         "prof_form":prof_form,
@@ -362,4 +363,10 @@ def send_pdf(request,accident):
 def report(request):
    # Where you would like to redirect the user after successfully logging out
    return render(request, 'report.html')
+
+def involved(request):
+    if request.method=='POST':
+        num=request.POST['involved']
+        return redirect('create-accident',num)
+    return render(request, "involved.html")
 
