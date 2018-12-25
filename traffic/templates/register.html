@@ -4,10 +4,10 @@
 {% block title %}Register{% endblock title %}
 
 {% block content %}
-    
+ <!--   
 <br>
 
-<div class="container" style="    display: flex;
+<div class="container animated zoomIn" style="    display: flex;
     justify-content: center;">
 <div class="card text-center" style="width: 30rem;">
   <h3 class="card-header bg-white">Register</h3>
@@ -22,8 +22,53 @@
     
   </div>
 </div>
-</div>
+</div> --><div class="row">
+<div class="col-2"></div>
+            <div class="col-8 form-block" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
+                          <h2>REGISTER</h2>
+                          <div class="form">
+                            <form action="{% url 'register' %}" method="POST" style="color:white">
+                              {% csrf_token %}
+                              <div class="row">
+                                <div class="col form-group" >
+                                  <span style="color:white;">Username*</span>
+                                    <p>{{form.username}}</p>
+                                </div>
+                                <div class="col form-group" >
+                                  <span style="color:white;">Civil ID*</span>
+                                    <p>{{popForm.civil_id}}</p>
+                                </div></div><div class="row">
+                                <div class="col form-group" >
+                                  <span style="color:white;">First Name*</span>
+                                    <p>{{form.first_name}}</p>
+                                </div>
+                                <div class=" col form-group" >
+                                  <span style="color:white;">Last Name*</span>
+                                    <p>{{form.last_name}}</p>
+                                </div>
+                              </div><div class="row">
+                                <div class=" col form-group" >
+                                  <span style="color:white;">Email</span>
+                                    <p>{{form.email}}</p>
+                                </div>
+                                <div class=" col form-group" >
+                                  <span style="color:white;">Mobile</span>
+                                    <p>{{popForm.phone_no}}</p>
+                                </div>
+                              </div>
+                              <div class="form-group" >
+                                  <span style="color:white;">password</span>
+                                    <p>{{form.password}}</p>
+                                </div>
+                                <input type="submit" value="Register" class="register">
 
+                            </form>
+
+                          </div>
+                        </div>
+                    <div class="col-2"></div>
+                  </div>
+                
 
 {% endblock content %}
 

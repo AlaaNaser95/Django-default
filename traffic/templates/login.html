@@ -4,32 +4,94 @@
 {% block title %}Login{% endblock title %}
 
 {% block content %}
-    
+ <!--   
 <br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<div class="container" style="    display: flex;
+
+<div class="container animated zoomIn" style="    display: flex;
     justify-content: center;">
-<div class="card text-center" style="width: 18rem;">
+<div class="card text-center" style="width: 30rem;">
   <h5 class="card-header bg-white">Login</h5>
   <div class="card-body">
-    
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
             {{form|crispy}}
             <br>
-
             <input type="submit" value="Login" class="btn btn-outline-warning">
-
         </form>
     
   </div>
 </div>
 </div>
+-->
+<br>
+<br>
+<br>
+<!--
+<div class="container">
+    <div class="row ">
+        <div class="col-md-offset-5 col-md-3 bg-dark">
+            <form class="form-login" action="{% url 'login' %}" method="POST">
+            <h4>Welcome back.</h4>
+            {{form}}
+            </br>
+            <br>
+            <div class="wrapper">
+            <span class="group-btn">     
+                <a href="#" class="btn btn-primary btn-md">login <i class="fa fa-sign-in"></i></a>
+            </span>
+            </div>
+            </form>
+        
+        </div>
+    </div>
+</div>
+-->
+<!--<div class="container">
+
+<div class="card text-white bg-secondary " style="margin:auto; align-items:center;width:50%" >
+  <div class="card-header text-center">Login</div>
+  <div class="card-body">
+    {{form.username}}
+    {{form.password}}
+    <br>
+    <a href="#" class="btn btn-primary btn-md">login <i class="fa fa-sign-in"></i></a>
+  </div>
+</div>
+</div>
+</div>-->
+
+<center>
+<div class="middle">
+      <div class="login">
+
+        <form action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+        <fieldset class="clearfix" style="color:white">
+          <span>Username</span>
+          <p ><span class="fa fa-user" style="color:darkblue"></span>{{form.username}}
+    </p> 
+          <span>Password</span>
+
+          <p><span class="fa fa-lock" style="color:darkblue"></span>{{form.password}}</p>
+          
+           <div>
+                              
+                              <span style="width:50%; text-align:right; font-size:15px;  display: inline-block;"><input type="submit" value="Login"></span>
+                          </div>
+
+        </fieldset>
+<div class="clearfix"></div>
+        </form>
+
+        <div class="clearfix"></div>
+
+      </div> <!-- end login -->
+      <div class="logo">LOGIN
+          
+          <div class="clearfix"></div>
+      </div>
+      
+      </div>
+      </center>
 {% endblock content %}
 

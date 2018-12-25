@@ -1,0 +1,75 @@
+
+/*============== sticky-wrapper =============**/
+.header-content {
+  padding: 50px 0;
+}
+.header-title {
+  color: orange;
+  display: block;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 50px;
+  text-transform: uppercase;
+}
+.header-motto {
+  color: orange;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+}
+.form-block {
+  background: white none repeat scroll 0 0;
+  border-radius: 10px;
+  border: 1px solid white;
+  color: gray;
+  display: block;
+  min-height:460px;
+  padding:30px;
+  margin-bottom:20px;
+}
+.form-block h2 {
+  border-bottom: 1px solid white;
+  color: white;
+  display: block;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 28px;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+}
+.form .form-control {
+  border-radius: 0;
+  color: orange;
+  height: 42px;
+}
+.form-control:focus {
+  border-color: orange;
+  box-shadow: none;
+}
+.custom-btn:hover{
+  background-color: orange;
+}
+.custom-btn {
+  background-color: #88c724;
+  border-color: transparent;
+  color: white;
+  font-size: 18px;
+  font-weight: 300;
+}
+.register  {
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  background-color: darkblue;
+  color: #eee;
+  /* margin-bottom: 2em; */
+  text-transform: uppercase;
+  padding: 5px 10px;
+  height: 30px;
+  font-size:15px;
+}
+
+.register:hover {
+  background-color: orange;
+}
+
