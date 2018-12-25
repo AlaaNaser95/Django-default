@@ -395,10 +395,12 @@ def send_pdf(request,accident):
 
 
 def report(request):
-   # Where you would like to redirect the user after successfully logging out
    return render(request, 'report.html')
 
 def involved(request):
+    if request.user.is_anonymous:
+        return redirect('login')
+
     if request.method=='POST':
         num=request.POST['involved']
         return redirect('create-accident',num)
