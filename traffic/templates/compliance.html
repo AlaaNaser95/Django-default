@@ -1,10 +1,21 @@
 {%extends "base.html"%}
+{% load crispy_forms_tags %}
 {%block content%}
 <div class="container" >
 		<div style="line-height: 44px;">
 					<font face="Arial, Helvetica, sans-serif" size="5" color="#FFFFFF" style="font-size: 34px;">
 					<span style="font-family: Georgia, serif; font-size: 34px; color: #FFFFFF;">
+<form action="{% url 'accident-compliance' accident_id profile_id%}" method="POST">
+            {% csrf_token %}
+            {{commentForm|crispy}}
+            <br>
+
+            <input type="submit" value="Submit" class="btn btn-outline-warning">
+
+        </form>
+
 						Thank you for complying with us.
+						
 					</span></font>
 				</div>
 
