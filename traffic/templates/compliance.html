@@ -31,6 +31,12 @@ body{
 .contact-form form .row{
     margin-bottom: -7%;
 }
+h1{
+	font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 20px; 
+    color: #c62121;
+    text-align: center;
+}
 .contact-form h3{
     font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
     font-size: 40px; 
@@ -38,7 +44,7 @@ body{
     font-variant: normal; 
     font-weight: 700; 
     line-height: 26.4px;
-    margin-bottom: 8%;
+    margin-bottom: 5%;
     margin-top: -10%;
     text-align: center;
     color: #063696;
@@ -71,9 +77,14 @@ body{
             <div class="contact-image">
                 <img src="{% static 'images/logoround.png' %}" alt="rocket_contact"/>
             </div>
+			
             <form action="{% url 'accident-compliance' accident_id profile_id%}" method="POST">
               {% csrf_token %}
                 <h3>Provide your comments.</h3>
+                <br>
+                <h1>{{error}}</h1>
+
+        
                <div class="row">
                     <div class="col">
                         <div class="form-group">
