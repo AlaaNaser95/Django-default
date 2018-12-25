@@ -13,7 +13,6 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
 from easy_pdf.rendering import render_to_pdf
-
 # Create your views here.
 
 from django.utils import timezone    
@@ -136,7 +135,7 @@ def user_register(request):
 def user_profile(request):
     if request.user.is_anonymous:
         return redirect('login')
-    accidents=Accident.objects.filter(involved=request.user.profile)
+    accidents=Accident.objects.filter(involved_people=request.user.profile)
     context={
         'accidents':accidents,  
     }
@@ -327,6 +326,7 @@ def accidentDetailStaff(request, accident_id):
 
 def compliance(request,accident_id,profile_id):
     accident=Accident.objects.get(id=accident_id)
+    Error_messages=""
     form=CommentForm()
     if(request.method=='POST'):
             form=CommentForm(request.POST)
@@ -338,10 +338,13 @@ def compliance(request,accident_id,profile_id):
                 comment.save()
                 messages.success(request, "Your remark on "+str(accident_id)+" is reported successfully")
                 return redirect('home')
+            else:
+                Error_messages="Please type something." 
     context={
         "commentForm":form,
         "accident_id":accident_id,
-        "profile_id":profile_id
+        "profile_id":profile_id,
+        "error":Error_messages
     }
     return render(request, 'compliance.html', context )            
 
