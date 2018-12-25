@@ -6,19 +6,21 @@
 {% block content %}
 
 
-<div class="container" style="    display: flex;
+<div class="container " style="    display: flex;
     justify-content: center;">
-<div class="card text-center" style="width: 50rem;">
-  <h3 class="card-header bg-white">How many people involved in the accident?</h3>
+<div class="card text-center" style="background-color:rgba(105,105,105,0.5);width: 50rem; border-color:white; border-radius:10px;">
+  <h3 class="card-header text-white border-color: white;">How many people involved in the accident?</h3>
   <div class="card-body">
 
         <form action="{% url 'involved'%}" method="POST" enctype="multipart/form-data">
             <br>
             {% csrf_token %}
+            <input type="number" class="text-center" name="involved" value="2" min="2" max="5">
+            <p class="text-danger" style="font-size:20px; font-weight:bold;">{{error}}</p>
             <br>
+
             <br>
-            <input type="number" name="involved" min="2" max="5">
-        <input type="submit" value="submit" class="btn btn-outline-warning">
+        <input type="submit" value="submit" class="btn btn-warning">
     </form>
 
 </div>

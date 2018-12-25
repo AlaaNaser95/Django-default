@@ -23,16 +23,17 @@
   </div>
 </div>
 </div> --><div class="row">
-<div class="col-2"></div>
-            <div class="col-8 form-block" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
+<div class="col-2 col-lg-2 col-md-1 col-sm-2"></div>
+            <div class="col-8 col-lg-8 col-md-9 col-sm-7 form-block" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
                           <h2>REGISTER</h2>
                           <div class="form">
-                            <form action="{% url 'register' %}" method="POST" style="color:white">
+                            <form action="{% url 'register' %}" method="POST" style="color:black">
                               {% csrf_token %}
                               <div class="row">
                                 <div class="col form-group" >
                                   <span style="color:white;">Username*</span>
                                     <p>{{form.username}}</p>
+                                    <span class="text-danger">{{error}}</span>
                                 </div>
                                 <div class="col form-group" >
                                   <span style="color:white;">Civil ID*</span>
@@ -66,7 +67,7 @@
 
                           </div>
                         </div>
-                    <div class="col-2"></div>
+                    <div class="col-2 col-lg-2 col-md-1 col-sm-1"></div>
                   </div>
                 
 

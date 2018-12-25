@@ -111,6 +111,7 @@ def accidentCreate(request,involved=2):
 
 def user_register(request):
     form = UserRegister()
+    error=""
     popForm=modelform_factory(Profile, form=forms.ModelForm,fields=('civil_id','phone_no'),labels={'civil_id':'Civil id', 'phone_no':'Mobile Number'})
     if request.method == 'POST':
         form = UserRegister(request.POST)
@@ -125,9 +126,12 @@ def user_register(request):
             login(request, user)
             # Where you want to go after a successful signup
             return redirect('accident-report')
+        elif User.objects.get(username=request.POST['username']):
+            error="This username already exists"
     context = {
         "form":form,
         "popForm":popForm,
+        "error":error,
     }
     return render(request, 'register.html', context)
 
@@ -400,9 +404,16 @@ def report(request):
 def involved(request):
     if request.user.is_anonymous:
         return redirect('login')
-
+    error=""
     if request.method=='POST':
-        num=request.POST['involved']
-        return redirect('create-accident',num)
-    return render(request, "involved.html")
+        if request.POST['involved']:
+            num=request.POST['involved']
+            return redirect('create-accident',num)
+        else:
+            error="Please add number of involved people"
+    context = {
+        "error":error,
+    }
+
+    return render(request, "involved.html",context)
 
