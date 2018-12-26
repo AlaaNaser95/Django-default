@@ -46,8 +46,8 @@ urlpatterns = [
     path('staff/accident/detail/<int:accident_id>/', accidentDetailStaff,name='staff-accident-detail'),
     # path('staff/accident/report/<int:accident_id>/', reportStaff ,name='report'),
 
-    path('accident/compliance/<int:accident_id>/<int:profile_id>', compliance,name='accident-compliance'),
-    path('accident/decline/<int:accident_id>/<int:profile_id>', declined,name='accident-decline'),
+    path('accident/compliance/<int:accident_id>/<int:involved_id>/', compliance,name='accident-compliance'),
+    path('accident/decline/<int:accident_id>/<int:involved_id>/', declined,name='accident-decline'),
     path('sendPdf/', send_pdf,name='accident-pdf'),
     path('trial/', trial,name='accident-trial')
 ]

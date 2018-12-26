@@ -2,7 +2,7 @@ import io
 from django.shortcuts import render, redirect
 from .forms import AccidentForm, UserRegister, UserLogin, CarImageForm,ReportForm, ProfileAccidentForm,CommentForm
 from django import forms
-from .models import Profile, RegistrationImage,CarImage,Accident,Report
+from .models import Profile, RegistrationImage,CarImage,Accident,Report,Involved
 from django.forms.models import modelform_factory
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
@@ -54,8 +54,7 @@ def accidentCreate(request,involved=2):
     involvedFormset = GroupInvolvedFormSet(queryset=Profile.objects.none())
     registrationFormset = GroupRegistrationImageFormSet(queryset=RegistrationImage.objects.none())
     accidentForm=AccidentForm()
-
-
+    commentForm=CommentForm()
     car_images_form=CarImageForm()
     # car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
     """In case Of Post"""
@@ -64,6 +63,8 @@ def accidentCreate(request,involved=2):
     if request.method == "POST":
         accidentForm = AccidentForm(request.POST, request.FILES)
         involvedFormset = GroupInvolvedFormSet(request.POST, queryset=Profile.objects.none())
+        car_images_form=CarImageForm(request.POST, request.FILES)
+        commentForm=CommentForm(request.POST)
         registrationFormset=GroupRegistrationImageFormSet(
                 request.POST,
                 request.FILES,
@@ -73,11 +74,15 @@ def accidentCreate(request,involved=2):
         print (involvedFormset)
 
 
-        if accidentForm.is_valid()  and registrationFormset.is_valid() and car_images_form.is_valid():
+        if accidentForm.is_valid()  and registrationFormset.is_valid() and car_images_form.is_valid() and commentForm.is_valid():
             accident=accidentForm.save()
             myProfile=Profile.objects.get(user_id=request.user.id)
             accident.involved_people.add(myProfile)
-
+            comment=commentForm.save(commit=False)
+            comment.accident=accident
+            comment.involved=request.user.profile
+            comment.status="Accepted"
+            comment.save()
             for x in involvedFormset:
                 if x.cleaned_data:
                     pop=x.save(commit=False)
@@ -86,6 +91,10 @@ def accidentCreate(request,involved=2):
                     profile.save()
                     if profile.civil_id:
                         accident.involved_people.add(profile)
+                        involvedx,created=Involved.objects.get_or_create(accident=accident,involved=profile,status="No Response")
+                        if(created):
+                            involvedx.save()
+
 
             for x in registrationFormset:
                 if x.cleaned_data:
@@ -97,11 +106,13 @@ def accidentCreate(request,involved=2):
                 car_images=CarImage.objects.create(accident_image=file,accident=accident)
                 car_images.save()
             regist_images=accident.save()
+
             messages.success(request, "Successfully Submitted!")
             email(request,accident)
-            return redirect('home')
+            return redirect('profile')
     context={
     "involved":involved,
+    "commentForm":commentForm,
         "involvedFormset":involvedFormset,
         "accidentForm":accidentForm,
         "registrationFormset":registrationFormset,
@@ -238,10 +249,11 @@ def report(request):
 
 def email(request,context):
     subject = 'Accident'     
-    for involved in context.involved_people.all():
-        html_message = render_to_string('trial.html',{'context':context,'involved':involved})
+    for involved in context.involved_set.all():
+        html_message = render_to_string('trial.html',{'context':context,'profile':involved.id})
+        print(involved.id)
         plain_message = strip_tags(html_message)  
-        send_mail(subject, plain_message, '', [involved.email], html_message=html_message)  
+        send_mail(subject, plain_message, '', [involved.involved.email], html_message=html_message)  
     
 def accidentList(request):
     if request.user.is_anonymous:
@@ -257,14 +269,17 @@ def accidentList(request):
 def accidentDetail(request, accident_id):
     if request.user.is_anonymous:
         return redirect('login')
+
     accident = Accident.objects.get(id=accident_id)
     #need to check if the user involved in the accident
     involved = accident.involved_people.all()
+    involved_comment = Involved.objects.filter(accident=accident)
     car_images=CarImage.objects.filter(accident=accident)
     regis_images=RegistrationImage.objects.filter(accident=accident)
     # student=classroom.student_set.all().order_by('name','-exam_grade')
             # messages.success(request, "Successfully booked!")
     context = {
+    "involved_comment":involved_comment,
         "accident": accident,
         "involved":involved,
         "car_images":car_images,
@@ -292,7 +307,7 @@ def accidentDetailStaff(request, accident_id):
         return redirect('login')
     if request.user.is_staff:
         accident = Accident.objects.get(id=accident_id)
-        involved = accident.involved_people.all()
+        involved = Involved.objects.filter(accident=accident)
         car_images=CarImage.objects.filter(accident=accident)
         regis_images=RegistrationImage.objects.filter(accident=accident)
         form=ReportForm()
@@ -352,16 +367,15 @@ def accidentDetailStaff(request, accident_id):
 #     else:
 #         return render(request, 'permission.html')
 
-def compliance(request,accident_id,profile_id):
+def compliance(request,accident_id,involved_id):
     accident=Accident.objects.get(id=accident_id)
     Error_messages=""
-    form=CommentForm()
+    involved=Involved.objects.get(id=involved_id)
+    form=CommentForm(instance=involved)
     if(request.method=='POST'):
-            form=CommentForm(request.POST)
+            form=CommentForm(request.POST,instance=involved)
             if form.is_valid():
                 comment=form.save(commit=False)
-                comment.accident=accident
-                comment.involved=Profile.objects.get(id=profile_id)
                 comment.status='Accepted'
                 comment.save()
                 messages.success(request, "Your remark on "+str(accident_id)+" is reported successfully")
@@ -371,21 +385,21 @@ def compliance(request,accident_id,profile_id):
     context={
         "commentForm":form,
         "accident_id":accident_id,
-        "profile_id":profile_id,
+        "involved_id":involved_id,
         "error":Error_messages
     }
     return render(request, 'compliance.html', context )            
 
-def declined(request,accident_id,profile_id):
+def declined(request,accident_id,involved_id):
     accident=Accident.objects.get(id=accident_id)
     Error_messages=""
-    form=CommentForm()
+    involved=Involved.objects.get(id=involved_id)
+    form=CommentForm(instance=involved)
+    
     if(request.method=='POST'):
-            form=CommentForm(request.POST)
+            form=CommentForm(request.POST, instance=involved)
             if form.is_valid():
                 comment=form.save(commit=False)
-                comment.accident=accident
-                comment.involved=Profile.objects.get(id=profile_id)
                 comment.status='Declined'
                 comment.save()
                 messages.success(request, "Your remark on "+str(accident_id)+" is reported successfully")
@@ -395,7 +409,7 @@ def declined(request,accident_id,profile_id):
     context={
         "commentForm":form,
         "accident_id":accident_id,
-        "profile_id":profile_id,
+        "involved_id":involved_id,
         "error":Error_messages
     }
     return render(request, 'decline.html', context ) 

@@ -44,7 +44,7 @@ class Involved(models.Model):
     ('Declined','Declined'),
     }
     comment=models.TextField(default="")
-    status=models.CharField(max_length=120,choices=STATUS,default='No response')
+    status=models.CharField(max_length=120,choices=STATUS,default='No Response')
 
 class Report(models.Model):
     detective= models.ForeignKey(User,on_delete=models.CASCADE)
