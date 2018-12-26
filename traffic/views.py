@@ -178,13 +178,12 @@ def updateProfile(request):
 
 def user_login(request):
     form = UserLogin()
+    error=""
     if request.method == 'POST':
         form = UserLogin(request.POST)
         if form.is_valid():
-
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-
             auth_user = authenticate(username=username, password=password)
             if auth_user is not None:
                 login(request, auth_user)
@@ -193,10 +192,13 @@ def user_login(request):
                     return redirect('staff-accident-list')
                 else:
                     return redirect('accident-report')
+            else:
+                error="Invalid username or password"
                     
 
     context = {
-        "form":form
+    "error":error,
+        "form":form,
     }
     return render(request, 'login.html', context)
 
