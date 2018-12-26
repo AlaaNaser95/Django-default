@@ -68,7 +68,7 @@
 
         <form action="{% url 'login' %}" method="POST">
           {% csrf_token %}
-          
+          <p class="text-danger big">{{error}}</p>
         <fieldset class="clearfix mt-4 animated fadeInUp" style="color:white">
           <span>Username*</span>
           <p class="animated fadeInUp "><span class="fa fa-user float-left" style="color:darkblue"></span>{{form.username}}
