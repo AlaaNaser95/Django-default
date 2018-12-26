@@ -1,7 +1,24 @@
 {%extends "base.html"%}
 {%block content%}
+<style>
+h1,h3,h5{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 30px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
+p,th,td{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 20px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
+</style>
 
-<div class="container" >
 	<h1 class="text-white " style="text-align:left;">Accident Details</h1>
 	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
 		<div class="card-body">
@@ -65,7 +82,7 @@
 		</div>
 		    
 </div>
-</div>
+
 <script>
 
 function showPosition(location_longitude,location_latitude) {

@@ -1,12 +1,31 @@
 {%extends "base.html"%}
-
 {%block content%}
+<style>
+body{
+    background-image: url("http://www.wellplannedweb.com/wp-content/uploads/2015/06/blue-gas-giant-texture-avmorgan-resources-stock-images-textures_9447376.jpg");
+}
+h1,h3,h5{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 30px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
+p,th,td{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 20px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
+</style>
 {% load crispy_forms_tags %}
 
-	<h1 class="text-white " style="text-align:left;">Accident Details</h1>
 	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
 		<div class="card-body">
-			<h1 class="card bg-danger text-white text-center">Accident-{{accident.id}}</h1>
+			<h1 class="card  text-white text-center" style="background-color:#073596">Accident-{{accident.id}}</h1>
 			<br>
 			<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
 			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location</h3> <div class="text-center" id="mapholder"></div></p>
@@ -28,16 +47,20 @@
       <th scope="col">Civil ID</th>
       <th scope="col">Name</th>
       <th scope="col">Status</th>
+
       <th scope="col">Comment</th>
     </tr>
   </thead>
   <tbody>
   {%for person in involved%}
 			<tr>
+
 			<td>{{person.involved.civil_id}}</td>
 			<td>{{person.involved.user.firstname}} {{person.involved.user.lastname}}</td>
 			<td>{{person.status}}</td>
 			<td>{{person.comment}}</td>
+
+
 			</tr>
 			{% endfor%}
 		</tbody>
@@ -51,7 +74,7 @@
 				<h3 class="text-white bg-dark">Accident Images</h3>
 				<br>
 			{% for img in car_images%}
-				<img src="{{img.accident_image.url}}" width="280" height="300"/>
+				<img src="{{img.accident_image.url}}" width="280" height="300" onclick="window.open(this.src)"/>
 				{% endfor %}
 				<br>
 			</div>
@@ -60,7 +83,7 @@
 				<h3 class="text-white bg-dark">Car Registration Images</h3>
 				<br>
 				{% for img in regis_images%}
-				<img src="{{img.regist_image.url}}" width="380" height="400"/>
+				<img src="{{img.regist_image.url}}" width="380" height="400" onclick="window.open(this.src)"/>
 				
 				{% endfor %}
 			</div>

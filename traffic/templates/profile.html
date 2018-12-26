@@ -1,7 +1,25 @@
 {%extends "base.html"%}
 {%block content%}
-
-<br><br><br>
+<style>
+body{
+    background-image: url("http://www.wellplannedweb.com/wp-content/uploads/2015/06/blue-gas-giant-texture-avmorgan-resources-stock-images-textures_9447376.jpg");
+}
+h1,h2,h3,h5{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 30px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
+small,span,th,td,.register{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 20px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+}
+</style>
 <div class="row">
 <div class="col-2 col-lg-2 col-md-1 col-sm-2 "></div>
             <div class="col-8 col-lg-8 col-md-9 col-sm-7 form-block animated fadeInDown" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
@@ -45,7 +63,7 @@
     <tr>
       <th scope="col">Accident ID</th>
       <th scope="col">Date & Time</th>
-      <th scope="col">status</th>
+      <th scope="col">Status</th>
       <th scope="col"></th>
     </tr>
   </thead class="thead text-white">
@@ -57,7 +75,7 @@
   <td><a class="text-white" href="{% url 'accident-detail' accident.id %}">{{accident.id}}</a></td> 
   <td>{{accident.date_time}}</td>
   <td>{{accident.status}}</td>
-  <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">view</a></td>
+  <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">View</a></td>
 </tr>
   {% endfor %}
 </tbody>
