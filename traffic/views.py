@@ -134,7 +134,7 @@ def user_register(request):
         "popForm":popForm,
         "error":error,
     }
-    return render(request, 'trial1.html', context)
+    return render(request, 'register.html', context)
 
 
 def user_profile(request):
@@ -296,7 +296,7 @@ def accidentDetailStaff(request, accident_id):
             "car_images":car_images,
             "regis_images":regis_images
             }
-        return render(request, 'accidentDetailStaff.html', context)
+        return render(request, 'trial1.html', context)
     else:
         return render(request, 'permission.html')
 
