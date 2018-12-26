@@ -1,27 +1,46 @@
 {%extends "base.html"%}
 {%block content%}
 
-<br>
-<br>
 
-<div class="container ">
-	<h1 class="text-white animated bounceInLeft" style="text-align:left;">PROFILE</h1>
-	<div class="card" style="background-color:rgba(169,169,169, 0.3)" >
-  		<div class="card-body" style="text-align:center;">
-        <h5 class="card-title text-white">Civil ID:    {{request.user.profile.civil_id}}</h5>
-        <br>
-    		<h5 class="card-subtitle mb-2 text-white">Name:    {{request.user.first_name}} {{request.user.last_name}}</h5>
-    		<br>
-    		<h5 class="card-subtitle mb-2 text-white">Email:    {{request.user.email}}</h5>
-    		<br>
-        <h5 class="card-subtitle mb-2 text-white">Phone Number:    {{request.user.profile.phone_no}}</h5>
-        <br>
-    		<a href="{% url 'update-profile' %}" class="btn btn-outline-warning" >Edit Profile</a>    
+<div class="row">
+<div class="col-2 col-lg-2 col-md-1 col-sm-2 "></div>
+            <div class="col-8 col-lg-8 col-md-9 col-sm-7 form-block animated fadeInDown" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
+                          <h2>{{request.user.first_name}} {{request.user.last_name}} <br>
+                            <small class="text-warning">Civil ID: {{request.user.profile.civil_id}}</small></h2>
+                          
+                          <div class="form">
+                            <form action="{% url 'update-profile' %}" method="POST" style="color:black">
+                              {% csrf_token %}
+                              
+                                
+                                <div class="row">
+                                <div class=" col form-group" >
+                                  <span style="color:white;">Email</span>
+                                    <p><span class="fas fa-envelope float-left bg-white" style="line-height:27px;color:darkblue;padding: 0 2px;"></span>{{user_form.email}}</p>
+                                </div>
+                                <div class=" col form-group" >
+                                  <span style="color:white;">Mobile</span>
+                                    <p><span class="fa fa-phone float-left bg-white" style="line-height:27px; color:darkblue;padding: 0 2px;"></span>{{prof_form.phone_no}}</p>
+                                </div>
+                              </div>
+                              <div class="row">
+                              <div class="col form-group" >
+                                  <span style="color:white;">Password*</span>
+                                    <p><span class="fas fa-id-card float-left bg-white" style="line-height:27px; color:darkblue;padding: 0 2px;"></span>{{user_form.password}}</p>
+                                </div>
+                              </div>
+                                <input type="submit" value="Update Profile" class="register">
 
-    		<br>
-    		<br>
-    		<div class="container" style="text-align:left;">
-  <table class="table table-borderless">
+                            </form>
+
+                          </div>
+                        </div>
+                    <div class="col-2 col-lg-2 col-md-1 col-sm-1"></div>
+                  </div>
+    	
+    		<div class="col-9 animated bounceInLeft" style="text-align:left; margin:0 auto;">
+          <h1 class="text-white text-center ">Accidents History</h1>
+  <table class="table table-borderless" style="background-color:rgba(105,105,105,0.5)">
   <thead class="thead bg-danger text-white">
     <tr>
       <th scope="col">Accident ID</th>
@@ -35,7 +54,7 @@
 
   <tr>
     
-  <td><a href="{% url 'accident-detail' accident.id %}">{{accident.id}}</a></td> 
+  <td><a class="text-white" href="{% url 'accident-detail' accident.id %}">{{accident.id}}</a></td> 
   <td>{{accident.date_time}}</td>
   <td>{{accident.status}}</td>
   <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">view</a></td>
@@ -44,14 +63,6 @@
 </tbody>
 </table>
 </div>  
-
-
-
-
-
-
-
-
 
 {% endblock %}
 
