@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.forms.widgets import HiddenInput
-from .models import Accident,Profile, CarImage,Report
+from .models import Accident,Profile, CarImage,Report,Involved
 
 
 
@@ -24,7 +24,6 @@ class CarImageForm(forms.ModelForm):
                 "file_field": "Accident Image"
             }
 
-
 class UserRegister(forms.ModelForm):
     first_name=forms.CharField(max_length=30,required=True)
     last_name=forms.CharField(max_length=150,required=True)
@@ -44,7 +43,12 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['civil_id', 'phone_no']
-
+        
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Involved
+        fields = ['comment']
+ 
 class ProfileAccidentForm(forms.ModelForm):
     email=forms.EmailField(max_length=254, required=True)
     class Meta:

@@ -1,7 +1,8 @@
 {%extends "base.html"%}
+
 {%block content%}
 {% load crispy_forms_tags %}
-<div class="container" >
+
 	<h1 class="text-white " style="text-align:left;">Accident Details</h1>
 	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
 		<div class="card-body">
@@ -66,9 +67,8 @@
 			{% if not accident.report %}
 			<br>
 
-<div class="container" style="    display: flex;
-    justify-content: center;">
-<div class="card text-center" style="width: 50rem;">
+<div >
+<div class="card text-center" >
   <h3 class="card-header bg-white">Generate Report</h3>
   <div class="card-body">
 
@@ -96,7 +96,7 @@
 			{% endif %}
 		</div>		    
 </div>
-</div>
+
 <script>
 
 function showPosition(location_longitude,location_latitude) {

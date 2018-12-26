@@ -12,7 +12,7 @@ class Profile(models.Model):
     email=models.EmailField(max_length=254,blank=True,null=True)
 
 class Accident(models.Model):
-    involved= models.ManyToManyField(Profile)
+    involved_people= models.ManyToManyField(Profile)
     location_longitude = models.DecimalField(max_digits=9, default=1, decimal_places=6)
     location_latitude = models.DecimalField(max_digits=9, default=1,decimal_places=6)
     date_time = models.DateTimeField(auto_now_add=True)
@@ -28,13 +28,23 @@ class Accident(models.Model):
     status=models.CharField(max_length=120,choices=STATUS,default='New')
  
 class CarImage(models.Model):
-    accident_image=models.FileField(validators=[validate_file_extension])
+    accident_image=models.TextField(validators=[validate_file_extension])
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
 
 class RegistrationImage(models.Model):
     regist_image=models.ImageField()
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
-
+    
+class Involved(models.Model):
+    accident=models.ForeignKey(Accident,on_delete=models.CASCADE)
+    involved=models.ForeignKey(Profile,on_delete=models.CASCADE)
+    STATUS={
+    ('No Response','No Response'),
+    ('Accepted','Accepted'),
+    ('Declined','Declined'),
+    }
+    comment=models.TextField(default="")
+    status=models.CharField(max_length=120,choices=STATUS,default='No response')
 
 class Report(models.Model):
     detective= models.ForeignKey(User,on_delete=models.CASCADE)
