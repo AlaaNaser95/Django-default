@@ -296,7 +296,7 @@ def accidentDetailStaff(request, accident_id):
             "car_images":car_images,
             "regis_images":regis_images
             }
-        return render(request, 'trial1.html', context)
+        return render(request, 'accidentDetailStaff.html', context)
     else:
         return render(request, 'permission.html')
 
