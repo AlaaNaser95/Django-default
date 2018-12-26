@@ -2,7 +2,7 @@
 {%block content%}
 <style>
 body{
-    background-image: url("https://cdn.hipwallpaper.com/i/40/47/d1DqXL.jpg");
+    background-image: url("http://www.wellplannedweb.com/wp-content/uploads/2015/06/blue-gas-giant-texture-avmorgan-resources-stock-images-textures_9447376.jpg");
 }
 h1,h3,h5{
     font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
@@ -46,12 +46,14 @@ p,th,td{
     <tr>
       <th scope="col">Civil ID</th>
       <th scope="col">Name</th>
+      <th scope="col">Comment</th>
     </tr>
   </thead>
   <tbody>
   {%for person in involved%}
 			<tr>
 			<td>{{person.civil_id}}</td>
+			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
 			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
 			</tr>
 			{% endfor%}

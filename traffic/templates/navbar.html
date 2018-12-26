@@ -110,7 +110,14 @@ nav a{
     transition:all 0.5s ease;
     font-size:20px;
 }
-
+a{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 30px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
 nav a:hover{
     font-size:23px;
 }
@@ -127,7 +134,7 @@ nav a:hover{
     
     <nav class="nav nav-pills nav-justified" style="margin:auto;">
         <a href="{% url 'home' %}" class="nav-item nav-link text-white"><i class="fas fa-home text-warning"></i>Home</a>
-         <a href="{% url 'involved' %}" class="nav-item nav-link text-white"><i class="fas fa-plus-circle text-warning"></i> Report Accident</a>
+         <a href="{% url 'involved' %}" class="nav-item nav-link text-white"><i class="fas fa-car-crash text-warning"></i>  Report Accident</a>
           {% if request.user.is_authenticated %}
             {% if request.user.is_staff %}
             <a href="{% url 'staff-accident-list' %}" class="nav-item nav-link text-white">Accidents</a>
