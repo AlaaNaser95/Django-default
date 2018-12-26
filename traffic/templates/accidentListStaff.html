@@ -1,67 +1,168 @@
-{%extends "base.html"%}
-{%block content%}
-<br>
-<br>
-<br>
-<br>
-<br>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+body{
+    background-image: url("https://cdn.hipwallpaper.com/i/40/47/d1DqXL.jpg");
+}
+a.list-group-item.active, a.list-group-item.active:hover, a.list-group-item.active:focus {
+    z-index: 2;
+    color: #fff;
+    background-color: #031e4b;
+    border-color: #031e4b;
+}
+a.list-group-item {
+    height:auto;
+    min-height:220px;
 
-<div class="container" >
+}
+a.list-group-item.active small {
+    color:#fff;
+}
+.stars {
+    margin:20px auto 1px;    
+}
+.list-group{
+    background-color:#031e4b !important;
+    color:#031e4b !important;
+}
+.row h1{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 30px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
+.list-group-item-heading{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 30px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+}
+.list-group-item-text{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 20px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;  
+}
+.status{
+    color:#f44949 !important;
+}
+.btnContact {
 
-  <h2 class="text-white">New Accidents</h2>
-  <div class="card" style="background-color:rgba(169,169,169, 0.3)">
-  <div style="height:400px;overflow-y:scroll;">
-  <table class="table table-borderless">
-  <thead class="thead bg-danger text-white">
-    <tr>
-      <th scope="col">Accident ID</th>
-      <th scope="col">Date & Time</th>
-      <th scope="col">status</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody class="text-white" >
-  {% for accident in  new_accidents %}
-  <tr>
-  <td><a href="{% url 'staff-accident-detail' accident.id %}">{{accident.id}}</a></td>
-  <td>{{accident.date_time}}</td>
-  <td>{{accident.status}}</td>
-  <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning">Generate Report</a></td>
-</tr>
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif ;
+    font-size: 20px ;
+    font-style: normal ; 
+    font-variant: normal ; 
+    font-weight: 700 ;
+    margin-top: 10%;
+    border: none;
+    padding: 1%;
+    border-radius: 1.5rem;
+    background: #063696;
+    color: #fff;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.btnContactx {
 
-  {% endfor %}
-  </tbody>
-</table>
-</div>
-</div>
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif ;
+    font-size: 20px ;
+    font-style: normal ; 
+    font-variant: normal ; 
+    font-weight: 700 ;
+    margin-top: 10%;
+    border: none;
+    padding: 1%;
+    border-radius: 1.5rem;
+    background: #ffd000;
+    color:#181971;
+    font-weight: 600;
+    width: 50%;
+    cursor: pointer;
+}
+.text {
+  display: block;
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 
-<br>
-<br>
+.wellx {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #073596;
+    border: 1px solid #073596;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+}
+</style>
+{% include "navbar.html" %}
+<div class="container">
+    <div class="row">
+        <div class="container well">
+        <h1 class="text-center">New Accidents</h1>
+        </div>
+           <div  style="height:500px;overflow-y:scroll;">
+        {% for accident in  new_accidents %}
+        <div class=" col-md-12 well">
+        <div class="list-group">
+          <a href="{% url 'staff-accident-detail' accident.id %}"class="list-group-item active">
+                <div class="col-md-9">
+                    <h4 class="list-group-item-heading">  Accident No: {{accident.id}} </h4>
+                    <p class="list-group-item-text"> Date & Time:  {{accident.date_time}}
+                    </p>
+                    <p class="list-group-item-text status">{{accident.status}}
+                    </p>
+                    <p class="list-group-item-text text" >{{accident.description}}
+                    </p>
+                </div> 
+          </a>
+             
+        </div>
+        <div class="container text-center">
+                    <a class="btnContact" href="{% url 'staff-accident-detail' accident.id %}">Generate Report</a>
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="container wellx">
+        <h1 class="text-center text-light">Reported Accidents</h1>
+        </div>
+        <div  style="height:500px;overflow-y:scroll;">
+        {% for accident in  accidents %}
+        <div class=" col-md-12 well">
+        <div class="list-group">
+          <a href="{% url 'staff-accident-detail' accident.id %}"class="list-group-item active">
+                <div class="col-md-9">
+                    <h4 class="list-group-item-heading">  Accident No: {{accident.id}} </h4>
+                    <p class="list-group-item-text"> Date & Time:  {{accident.date_time}}
+                    </p>
+                    <p class="list-group-item-text text" >{{accident.description}}
+                    </p>
+                </div> 
+          </a>
+             
+        </div>
+        <div class="container text-center">
+                    <a class="btnContactx" href="{% url 'staff-accident-detail' accident.id %}" >View</a>
+        </div>
 
-<h2 class="text-white">Reported Accidents</h2>
-<div class="card" style="background-color:rgba(169,169,169, 0.3)">
-  <div style="height:400px;overflow-y:scroll;">
-  <table class="table table-borderless">
-  <thead class="thead bg-dark text-white">
-    <tr>
-      <th scope="col">Accident ID</th>
-      <th scope="col">Date & Time</th>
-      <th scope="col">Status</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody class="text-white">
-  {% for accident in  accidents %}
-  <tr>
-  <td><a href="{% url 'staff-accident-detail' accident.id %}">{{accident.id}}</a></td>
-  <td>{{accident.date_time}}</td>
-  <td>{{accident.status}}</td>
-  <td><a href="{% url 'staff-accident-detail' accident.id %}" class="btn btn-warning"> view</a></td>
-</tr>
-  {% endfor %}
-  </tbody>
-</table>
+
+        </div>
+        {% endfor %}
+    </div>
+    </div>
 </div>
-</div>
-</div>
-{% endblock %}

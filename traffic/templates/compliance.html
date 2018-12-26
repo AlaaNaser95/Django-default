@@ -11,7 +11,7 @@ body{
     margin-top: 10%;
     margin-bottom: 5%;
     width: 70%;
-    border-radius:6rem;
+    border-radius:2rem;
 }
 .contact-form .form-control{
     border-radius:1rem;
@@ -25,13 +25,19 @@ body{
     margin-top: -8%;
     
 }
+.register{
+    background: -webkit-linear-gradient(left, #02102A, #023689);
+    margin-top: 3% ;
+    padding: 3% ;
+}
+
 .contact-form form{
     padding: 14%;
 }
 .contact-form form .row{
     margin-bottom: -7%;
 }
-h1{
+p{
 	font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
     font-size: 20px; 
     color: #c62121;
@@ -50,17 +56,23 @@ h1{
     color: #063696;
 }
 .contact-form .btnContact {
-    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
-    font-size: 20px; 
-    width: 50%;
+
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif ;
+    font-size: 20px ;
+    font-style: normal ; 
+    font-variant: normal ; 
+    font-weight: 700 ;
+    margin-top: 10%;
     border: none;
-    border-radius: 1rem;
-    padding: 1.5%;
+    border-radius: 1.5rem;
+    padding: 2%;
     background: #063696;
-    font-weight: 600;
     color: #fff;
+    font-weight: 600;
+    width: 50%;
     cursor: pointer;
 }
+
 .btnContactSubmit
 {
     width: 50%;
@@ -82,7 +94,7 @@ h1{
               {% csrf_token %}
                 <h3>Provide your comments.</h3>
                 <br>
-                <h1>{{error}}</h1>
+                <p>{{error}}</p>
 
         
                <div class="row">

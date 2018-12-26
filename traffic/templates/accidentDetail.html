@@ -1,79 +1,102 @@
 {%extends "base.html"%}
 {%block content%}
 
-<div class="container" >
-	<h1 class="text-white " style="text-align:left;">Accident Details</h1>
-	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
-		<div class="card-body">
-			<h1 class="card bg-danger text-white text-center">Accident-{{accident.id}}</h1>
-			<br>
-			<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
-			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location</h3> <div class="text-center" id="mapholder"></div></p>
-			<br>
-			<p class="card-text text-white">Date & Time: {{accident.date_time}}</p>
-			<br>
-			<h3 class="bg-dark text-white">Description</h3>
-			<br>
-			<p class="card-text text-white">{{accident.description}}</p>
-			<br>
+<div class="row">
+  <div class="col-md-12">
 
-	<div class="card text-center">
-		<div class="card-body">
+    <div id="mdb-lightbox-ui"></div>
 
-			<h5 class="card-title">Involved:</h5>
-  <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Civi ID</th>
-      <th scope="col">Name</th>
-    </tr>
-  </thead>
-  <tbody>
-  {%for person in involved%}
-			<tr>
-			<td>{{person.civil_id}}</td>
-			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
-			</tr>
-			{% endfor%}
-		</tbody>
+    <div class="mdb-lightbox no-margin">
 
-			</table>
-		
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(121).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(121).jpg"
+            class="img-fluid">
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
 
-			<p class="card-text">{{accident.date_time}}</p>
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(96).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(96).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
 
-			<div>
-				<h3 class="text-white bg-dark">Accident Images</h3>
-				<br>
-			{% for img in car_images%}
-				<img src="{{img.accident_image.url}}" width="280" height="300"/>
-				{% endfor %}
-				<br>
-			</div>
-			<div>
-				<br>
-				<h3 class="text-white bg-dark">Car Registration Images</h3>
-				<br>
-				{% for img in regis_images%}
-				<img src="{{img.regist_image.url}}" width="380" height="400"/>
-				
-				{% endfor %}
-			</div>
-		</div>
-		    
-</div>
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(104).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(104).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(45).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(45).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(122).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(122).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(115).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(125).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(125).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(115).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(115).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
+
+      <figure class="col-md-4">
+        <a class="black-text" href="https://mdbootstrap.com/img/Photos/Horizontal/Nature/12-col/img%20(119).jpg"
+          data-size="1600x1067">
+          <img alt="picture" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(119).jpg"
+            class="img-fluid" />
+          <h3 class="text-center my-3">Photo title</h3>
+        </a>
+      </figure>
+
+    </div>
+
+  </div>
 </div>
 <script>
-
-function showPosition(location_longitude,location_latitude) {
-console.log("Hello")       
-        var latlon = location_latitude + "," + location_longitude;
-        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
-
-document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-   
-}
-
+// MDB Lightbox Init
+$(function () {
+$("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
+});
 </script>
-
 {% endblock %}
