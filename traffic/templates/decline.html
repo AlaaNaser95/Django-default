@@ -84,7 +84,7 @@ p{
             <div class="contact-image">
                 <img src="{% static 'images/logoround.png' %}" alt="rocket_contact"/>
             </div>
-            <form action="{% url 'accident-decline' accident_id profile_id%}" method="POST">
+            <form action="{% url 'accident-decline' accident_id involved_id%}" method="POST">
               {% csrf_token %}
                 <h3>Provide your comments.</h3>
                 <br>

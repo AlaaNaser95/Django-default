@@ -249,10 +249,11 @@ def report(request):
 
 def email(request,context):
     subject = 'Accident'     
-    for involved in context.involved_people.all():
-        html_message = render_to_string('trial.html',{'context':context,'involved':involved})
+    for involved in context.involved_set.all():
+        html_message = render_to_string('trial.html',{'context':context,'profile':involved.id})
+        print(involved.id)
         plain_message = strip_tags(html_message)  
-        send_mail(subject, plain_message, '', [involved.email], html_message=html_message)  
+        send_mail(subject, plain_message, '', [involved.involved.email], html_message=html_message)  
     
 def accidentList(request):
     if request.user.is_anonymous:
@@ -366,7 +367,7 @@ def accidentDetailStaff(request, accident_id):
 #     else:
 #         return render(request, 'permission.html')
 
-def compliance(request,accident_id,profile_id,involved_id):
+def compliance(request,accident_id,involved_id):
     accident=Accident.objects.get(id=accident_id)
     Error_messages=""
     involved=Involved.objects.get(id=involved_id)
@@ -384,12 +385,12 @@ def compliance(request,accident_id,profile_id,involved_id):
     context={
         "commentForm":form,
         "accident_id":accident_id,
-        "profile_id":profile_id,
+        "involved_id":involved_id,
         "error":Error_messages
     }
     return render(request, 'compliance.html', context )            
 
-def declined(request,accident_id,profile_id,involved_id):
+def declined(request,accident_id,involved_id):
     accident=Accident.objects.get(id=accident_id)
     Error_messages=""
     involved=Involved.objects.get(id=involved_id)
@@ -408,7 +409,7 @@ def declined(request,accident_id,profile_id,involved_id):
     context={
         "commentForm":form,
         "accident_id":accident_id,
-        "profile_id":profile_id,
+        "involved_id":involved_id,
         "error":Error_messages
     }
     return render(request, 'decline.html', context ) 
