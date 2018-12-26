@@ -125,11 +125,14 @@ def user_register(request):
             login(request, user)
             # Where you want to go after a successful signup
             return redirect('accident-report')
+        else:
+            print("Nope")    
+
     context = {
         "form":form,
         "popForm":popForm,
     }
-    return render(request, 'register.html', context)
+    return render(request, 'trial1.html', context)
 
 
 def user_profile(request):
@@ -350,6 +353,7 @@ def compliance(request,accident_id,profile_id):
 
 def declined(request,accident_id,profile_id):
     accident=Accident.objects.get(id=accident_id)
+    Error_messages=""
     form=CommentForm()
     if(request.method=='POST'):
             form=CommentForm(request.POST)
@@ -361,10 +365,13 @@ def declined(request,accident_id,profile_id):
                 comment.save()
                 messages.success(request, "Your remark on "+str(accident_id)+" is reported successfully")
                 return redirect('home')
+            else:
+                Error_messages="Please type something."     
     context={
         "commentForm":form,
         "accident_id":accident_id,
-        "profile_id":profile_id
+        "profile_id":profile_id,
+        "error":Error_messages
     }
     return render(request, 'decline.html', context ) 
 

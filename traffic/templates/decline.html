@@ -16,6 +16,7 @@ body{
 .contact-form .form-control{
     border-radius:1rem;
 }
+
 .contact-image{
     text-align: center;
 }
@@ -44,17 +45,23 @@ body{
     color: #063696;
 }
 .contact-form .btnContact {
-    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
-    font-size: 20px; 
-    width: 50%;
+
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif ;
+    font-size: 20px ;
+    font-style: normal ; 
+    font-variant: normal ; 
+    font-weight: 700 ;
+    margin-top: 10%;
     border: none;
-    border-radius: 1rem;
-    padding: 1.5%;
+    border-radius: 1.5rem;
+    padding: 2%;
     background: #063696;
-    font-weight: 600;
     color: #fff;
+    font-weight: 600;
+    width: 50%;
     cursor: pointer;
 }
+
 .btnContactSubmit
 {
     width: 50%;
@@ -65,6 +72,12 @@ body{
     border: none;
     cursor: pointer;
 }
+p{
+	font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 20px; 
+    color: #c62121;
+    text-align: center;
+}
 </style>
 {% include "navbar.html" %}
 <div class="container contact-form">
@@ -74,6 +87,8 @@ body{
             <form action="{% url 'accident-decline' accident_id profile_id%}" method="POST">
               {% csrf_token %}
                 <h3>Provide your comments.</h3>
+                <br>
+                <p>{{error}}</p>
                <div class="row">
                     <div class="col">
                         <div class="form-group">
