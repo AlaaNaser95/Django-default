@@ -23,20 +23,21 @@
   </div>
 </div>
 </div> --><div class="row">
-<div class="col-2"></div>
-            <div class="col-8 form-block" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
+<div class="col-2 col-lg-2 col-md-1 col-sm-2 "></div>
+            <div class="col-8 col-lg-8 col-md-9 col-sm-7 form-block animated fadeInDown" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
                           <h2>REGISTER</h2>
                           <div class="form">
-                            <form action="{% url 'register' %}" method="POST" style="color:white">
+                            <form action="{% url 'register' %}" method="POST" style="color:black">
                               {% csrf_token %}
                               <div class="row">
                                 <div class="col form-group" >
                                   <span style="color:white;">Username*</span>
-                                    <p>{{form.username}}</p>
+                                    <p><span class="icon fa fa-user float-left bg-white " style="line-height:27px;color:darkblue;padding: 0 2px;"></span>{{form.username}}</p>
+                                    <span class="text-danger">{{error}}</span>
                                 </div>
                                 <div class="col form-group" >
                                   <span style="color:white;">Civil ID*</span>
-                                    <p>{{popForm.civil_id}}</p>
+                                    <p><span class="fas fa-id-card float-left bg-white" style="line-height:27px; color:darkblue;padding: 0 2px;"></span>{{popForm.civil_id}}</p>
                                 </div></div><div class="row">
                                 <div class="col form-group" >
                                   <span style="color:white;">First Name*</span>
@@ -49,16 +50,16 @@
                               </div><div class="row">
                                 <div class=" col form-group" >
                                   <span style="color:white;">Email</span>
-                                    <p>{{form.email}}</p>
+                                    <p><span class="fas fa-envelope float-left bg-white" style="line-height:27px;color:darkblue;padding: 0 2px;"></span>{{form.email}}</p>
                                 </div>
                                 <div class=" col form-group" >
                                   <span style="color:white;">Mobile</span>
-                                    <p>{{popForm.phone_no}}</p>
+                                    <p><span class="fas fa-phone float-left bg-white" style="line-height:27px; color:darkblue;padding: 0 2px;"></span>{{popForm.phone_no}}</p>
                                 </div>
                               </div>
                               <div class="form-group" >
                                   <span style="color:white;">password</span>
-                                    <p>{{form.password}}</p>
+                                    <p><span class="fa fa-lock float-left bg-white" style="line-height:27px;color:darkblue;padding: 0 2px;"></span>{{form.password}}</p>
                                 </div>
                                 <input type="submit" value="Register" class="register">
 
@@ -66,7 +67,7 @@
 
                           </div>
                         </div>
-                    <div class="col-2"></div>
+                    <div class="col-2 col-lg-2 col-md-1 col-sm-1"></div>
                   </div>
                 
 
