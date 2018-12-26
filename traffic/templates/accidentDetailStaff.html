@@ -27,15 +27,12 @@ p,th,td{
 		<div class="card-body">
 			<h1 class="card  text-white text-center" style="background-color:#073596">Accident-{{accident.id}}</h1>
 			<br>
+			<h3 class="bg-dark text-white">Date & Time: {{accident.date_time}}</h3>
+			<br>
 			<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
-			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location</h3> <div class="text-center" id="mapholder"></div></p>
-			<br>
-			<p class="card-text text-white"><strong>Date & Time: </strong>{{accident.date_time}}</p>
-			<br>
-			<h3 class="bg-dark text-white">Description</h3>
-			<br>
-			<p class="card-text text-white">{{accident.description}}</p>
-			<br>
+			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location:</h3> <div class="text-center" id="mapholder"></div></p>
+		
+			
 
 	<div class="card text-center">
 		<div class="card-body">
@@ -68,7 +65,6 @@ p,th,td{
 			</table>
 		
 
-			<p class="card-text">{{accident.date_time}}</p>
 
 			<div>
 				<h3 class="text-white bg-dark">Accident Images</h3>

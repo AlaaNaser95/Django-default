@@ -19,19 +19,17 @@ p,th,td{
 }
 </style>
 
-	<h1 class="text-white " style="text-align:left;">Accident Details</h1>
+
 	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
 		<div class="card-body">
 			<h1 class="card bg-danger text-white text-center">Accident-{{accident.id}}</h1>
 			<br>
+			<h3 class="bg-dark text-white">Date & Time: {{accident.date_time}}</h3>
+			<br>
+			<h3 class="bg-dark text-white">Accident Status: {{accident.status}}</h3>
+			<br>
 			<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
-			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location</h3> <div class="text-center" id="mapholder"></div></p>
-			<br>
-			<p class="card-text text-white">Date & Time: {{accident.date_time}}</p>
-			<br>
-			<h3 class="bg-dark text-white">Description</h3>
-			<br>
-			<br>
+			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location:</h3> <div class="text-center" id="mapholder"></div></p>
 
 	<div class="card text-center">
 		<div class="card-body">
@@ -42,7 +40,7 @@ p,th,td{
     <tr>
       <th scope="col">Civi ID</th>
       <th scope="col">Name</th>
-      <th scope="col">Status</th>
+      <th scope="col">Involved Status</th>
       <th scope="col">Comment</th>
     </tr>
   </thead>
@@ -58,9 +56,6 @@ p,th,td{
 		</tbody>
 
 			</table>
-		
-
-			<p class="card-text">{{accident.status}}</p>
 
 			<div>
 				<h3 class="text-white bg-dark">Accident Images</h3>
