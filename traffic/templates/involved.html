@@ -4,12 +4,12 @@
 {% block title %}Involved{% endblock title %}
 
 {% block content %}
+<br><br><br>
 
-
-<div class="container " style="    display: flex;
+<div class="container animated fadeInUp" style="    display: flex;
     justify-content: center;">
 <div class="card text-center" style="background-color:rgba(105,105,105,0.5);width: 50rem; border-color:white; border-radius:10px;">
-  <h3 class="card-header text-white border-color: white;">How many people involved in the accident?</h3>
+  <h3 class="card-header text-white border-color: white; ">How many people are involved in the accident?</h3>
   <div class="card-body">
 
         <form action="{% url 'involved'%}" method="POST" enctype="multipart/form-data">

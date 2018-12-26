@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<header class=" text-center ">
+<!--<header class=" text-center ">
   
     <div class="container">
         <div class="jumbotron">
@@ -16,5 +16,46 @@
     </div>
   
 
-</header>
+</header>-->
+
+
+
+
+<div class="row">
+<div class="col-2 col-lg-2 col-md-1 col-sm-2 "></div>
+            <div class="col-8 col-lg-8 col-md-9 col-sm-7 form-block animated fadeInDown" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
+                          <h2>{{request.user.first_name}} {{request.user.last_name}}</h2>
+                          <h5>{{profile.civil_id}}</h5>
+                          <div class="form">
+                            <form action="{% url 'update-profile' %}" method="POST" style="color:black">
+                              {% csrf_token %}
+                              <div class="row">
+                                <div class="col form-group" >
+                                  <span style="color:white;">Username</span>
+                                    <p><span class="fa fa-user float-left bg-white " style="line-height:27px;color:darkblue;"></span>{{user_form.username}}</p>
+                                    <span class="text-danger">{{error}}</span>
+                                </div>
+                                <div class="col form-group" >
+                                  <span style="color:white;">Password*</span>
+                                    <p><span class="fas fa-id-card float-left bg-white" style="line-height:27px; color:darkblue;padding: 0 2px;"></span>{{user_form.password}}</p>
+                                </div></div><div class="row">
+                                <div class=" col form-group" >
+                                  <span style="color:white;">Email</span>
+                                    <p><span class="fas fa-envelope float-left bg-white" style="line-height:27px;color:darkblue;padding: 0 2px;"></span>{{user_form.email}}</p>
+                                </div>
+                                <div class=" col form-group" >
+                                  <span style="color:white;">Mobile</span>
+                                    <p><span class="fa fa-phone float-left bg-white" style="line-height:27px; color:darkblue;padding: 0 2px;"></span>{{prof_form.phone_no}}</p>
+                                </div>
+                              </div>
+                              
+                                <input type="submit" value="Update" class="register">
+
+                            </form>
+
+                          </div>
+                        </div>
+                    <div class="col-2 col-lg-2 col-md-1 col-sm-1"></div>
+                  </div>
+
 {% endblock %}

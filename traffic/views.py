@@ -140,9 +140,30 @@ def user_register(request):
 def user_profile(request):
     if request.user.is_anonymous:
         return redirect('login')
+
     accidents=Accident.objects.filter(involved_people=request.user.profile)
+    profile=request.user.profile
+    prof_form = modelform_factory(Profile, form=forms.ModelForm,fields=('phone_no',),labels={'phone_no':'Mobile Number'})
+    user_form = modelform_factory(User, form=UserRegister,fields=('username','password','email',))
+    user_form = user_form(instance=profile.user)
+    prof_form = prof_form(instance=profile)
+    if request.method == "POST":
+        prof_form = modelform_factory(Profile, form=forms.ModelForm,fields=('phone_no',),labels={'phone_no':'Mobile Number'})
+        user_form = modelform_factory(User, form=forms.ModelForm,fields=('username','password','email',))
+        prof_form = prof_form(request.POST,instance=profile)
+        user_form = user_form(request.POST,instance=request.user)
+        if prof_form.is_valid() and user_form.is_valid():
+            user=user_form.save(commit=False)
+            user.set_password(user.password)
+            user.save()
+            prof_form.save()
+            # login(request.user)
+            # messages.success(request, "Successfully Updated!")
+            return redirect('login')
     context={
-        'accidents':accidents,  
+        "accidents":accidents,
+        "prof_form":prof_form,
+        "user_form":user_form, 
     }
     return render(request, 'profile.html',context)
 
@@ -158,7 +179,7 @@ def updateProfile(request):
     prof_form = prof_form(instance=profile)
     if request.method == "POST":
         prof_form = modelform_factory(Profile, form=forms.ModelForm,fields=('phone_no',),labels={'phone_no':'Mobile Number'})
-        user_form = modelform_factory(User, form=UserRegister,fields=('username','password','email',))
+        user_form = modelform_factory(User, form=forms.ModelForm,fields=('username','password','email',))
         prof_form = prof_form(request.POST,instance=profile)
         user_form = user_form(request.POST,instance=request.user)
         if prof_form.is_valid() and user_form.is_valid():
@@ -168,7 +189,7 @@ def updateProfile(request):
             prof_form.save()
             # login(request.user)
             # messages.success(request, "Successfully Updated!")
-            return redirect('home')    
+            return redirect('login')    
     
     context = {
         "prof_form":prof_form,
