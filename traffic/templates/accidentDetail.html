@@ -14,7 +14,6 @@
 			<br>
 			<h3 class="bg-dark text-white">Description</h3>
 			<br>
-			<p class="card-text text-white">{{accident.description}}</p>
 			<br>
 
 	<div class="card text-center">
@@ -26,13 +25,17 @@
     <tr>
       <th scope="col">Civi ID</th>
       <th scope="col">Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Comment</th>
     </tr>
   </thead>
   <tbody>
-  {%for person in involved%}
+  {%for involved in involved_comment%}
 			<tr>
-			<td>{{person.civil_id}}</td>
-			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
+			<td>{{involved.involved.civil_id}}</td>
+			<td>{{involved.involved.user.firstname}} {{involved.involved.user.lastname}}</td>
+			<td>{{involved.status}}</td>
+			<td>{{involved.comment}}</td>
 			</tr>
 			{% endfor%}
 		</tbody>

@@ -27,13 +27,17 @@
     <tr>
       <th scope="col">Civil ID</th>
       <th scope="col">Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Comment</th>
     </tr>
   </thead>
   <tbody>
   {%for person in involved%}
 			<tr>
-			<td>{{person.civil_id}}</td>
-			<td>{{person.user.firstname}} {{person.user.lastname}}</td>
+			<td>{{person.involved.civil_id}}</td>
+			<td>{{person.involved.user.firstname}} {{person.involved.user.lastname}}</td>
+			<td>{{person.status}}</td>
+			<td>{{person.comment}}</td>
 			</tr>
 			{% endfor%}
 		</tbody>
