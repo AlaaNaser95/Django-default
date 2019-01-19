@@ -1,24 +1,33 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-<!--<header class=" text-center ">
-  
-    <div class="container">
-        <div class="jumbotron">
-          <h2 class="masthead-subheading mb-0">Edit Profile</h2>
-          <form action="{% url 'update-profile' %}" method="POST">
-            {% csrf_token %}
-            {{user_form|crispy}}
-            {{prof_form|crispy}}
-            <input class = "btn btn-primary btn-xl rounded-pill mt-5" type="submit" value="Edit">
-          </form>
-      </div>
-    </div>
-  
-
-</header>-->
-
-
+<style>
+body{
+    background-image: url("http://www.wellplannedweb.com/wp-content/uploads/2015/06/blue-gas-giant-texture-avmorgan-resources-stock-images-textures_9447376.jpg");
+}
+h1,h2,h3,h5{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 40px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+}
+h4{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 20px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+    color: #063696; 
+}
+p,small,span,th,td,.register{
+    font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+    font-size: 18px; 
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 700;
+}
+</style>
 
 
 <div class="row">

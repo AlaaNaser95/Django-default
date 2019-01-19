@@ -3,64 +3,6 @@
 
 
 
-<!--
-<nav class="navbar navbar-expand-lg navbar-light navbar-dark ">
-      <a class="navbar-brand" href="{% url 'home' %}"><img src="http://www.mof.gov.kw/MOFAuction/logoAuction/moi.png" width="80" height="80"/></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      {% if request.user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'profile' %}">
-          {{request.user}}</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'involved' %}"><i class="fas fa-plus-circle"></i> Report Accident</a>
-        </li>
-{% if request.user.is_staff %}
-<li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'staff-accident-list' %}"> Accidents</a>
-        </li>
-        {% endif %}
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Logout</a>
-        </li> 
-      {% else %}
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'register' %}"><i class="far fa-user-plus"></i>Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
-        </li>
-      {% endif %}
-    </ul>
-  </div>
-</nav>-->
-
-
-
-<!--
-  <div class="row">
-    <div class="col-xs-12">
-      <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'img/Vector-Smart-Object7.png' %}" width="200" height="90"/></a>
-        <ul class="list-inline navskew">
-          {% if request.user.is_authenticated %}
-            <li><a href="{% url 'profile' %}"><span class="skewblock"></span><span class="navlabel">{{request.user}}</span></a></li>
-            {% if request.user.is_staff %}
-            <li ><a href="{% url 'staff-accident-list' %}"><span class="skewblock bg-warning"></span><span class="navlabel">Accidents</span></a></li>
-            {% endif %}
-            <li><a href="{% url 'logout' %}"><span class="skewblock"></span><span class="navlabel">logout</span></a></li>
-          
-            <li><a href="{% url 'involved' %}"><span class="skewblock"></span><span class="navlabel">Report Accident</span></a></li>
-            {% else %}
-            <li><a href="{% url 'register' %}"><span class="skewblock"></span><span class="navlabel">Register</span></a></li>
-            <li><a href="{% url 'login' %}"><span class="skewblock"></span><span class="navlabel">Login</span></a></li>
-            {% endif %}
-            </ul>
-    </div>
-  </div> -->
 
 
 <html lang="en">

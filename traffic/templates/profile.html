@@ -27,7 +27,7 @@ small,span,th,td,.register{
                             <small class="text-warning">Civil ID: {{request.user.profile.civil_id}}</small></h2>
                           
                           <div class="form">
-                            <form action="{% url 'update-profile' %}" method="POST" style="color:black">
+                            <form action="{% url 'profile' %}" method="POST" style="color:black">
                               {% csrf_token %}
                               
                                 

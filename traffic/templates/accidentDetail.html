@@ -19,7 +19,7 @@ p,th,td{
 }
 </style>
 
-
+<div class="container">
 	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
 		<div class="card-body">
 			<h1 class="card bg-danger text-white text-center">Accident-{{accident.id}}</h1>
@@ -48,7 +48,7 @@ p,th,td{
   {%for involved in involved_comment%}
 			<tr>
 			<td>{{involved.involved.civil_id}}</td>
-			<td>{{involved.involved.user.firstname}} {{involved.involved.user.lastname}}</td>
+			<td>{{involved.involved.user.first_name}} {{involved.involved.user.last_name}}</td>
 			<td>{{involved.status}}</td>
 			<td>{{involved.comment}}</td>
 			</tr>
@@ -77,7 +77,7 @@ p,th,td{
 		</div>
 		    
 </div>
-
+</div>
 <script>
 
 function showPosition(location_longitude,location_latitude) {

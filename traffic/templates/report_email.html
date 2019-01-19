@@ -44,8 +44,16 @@
                     </li>
                 </ul>
             <div>
+                <div>
+            <h3 class="text-white bg-dark">Car Registration Images</h3>
+                <br>
+                {% for img in registrationimages%}
+                <img src="{{img.regist_image.url}}" width="380" height="400"/>
+                
+                {% endfor %}  
+                </div>  
             <h3> Report Details</h3>
-            <p>Detective: {{user.username}}</p>
+            <p>Detective: {{user.first_name}}</p>
             <p>Examiner: {{accident.report.examiner}}</p>
             <p>Reported At: {{accident.report.reported_at}}</p>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTT9EO5LfDYYLdUhg3ZV5FN4TH6gC_awyipfN8FXdGdWuzNwuY" width="80" height="80"/>
