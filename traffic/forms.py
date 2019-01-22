@@ -54,10 +54,7 @@ class ProfileAccidentForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['civil_id', 'email']
-    # def clean(self):
-    #     cleaned_data = super(ProfileForm, self).clean()
-    #     # additional cleaning here
-    #     return cleaned_data
+
 
 class ReportForm(forms.ModelForm):
     class Meta:

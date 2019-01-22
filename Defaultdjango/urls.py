@@ -5,7 +5,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+<<<<<<< HEAD
 from traffic.views import (accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,trial,involved)
+=======
+from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,involved
+
+>>>>>>> e4c7b9b30aca467a10a7c9007b6356231f55652d
 
 
 
@@ -29,12 +34,12 @@ urlpatterns = [
 
     path('staff/accident/list', accidentListStaff,name='staff-accident-list'),
     path('staff/accident/detail/<int:accident_id>/', accidentDetailStaff,name='staff-accident-detail'),
-    # path('staff/accident/report/<int:accident_id>/', reportStaff ,name='report'),
+
 
     path('accident/compliance/<int:accident_id>/<int:involved_id>/', compliance,name='accident-compliance'),
     path('accident/decline/<int:accident_id>/<int:involved_id>/', declined,name='accident-decline'),
     path('sendPdf/', send_pdf,name='accident-pdf'),
-    path('trial/', trial,name='accident-trial')
+
 ]
 
 urlpatterns+=static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

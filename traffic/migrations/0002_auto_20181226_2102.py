@@ -13,11 +13,19 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='accident',
             name='status',
+<<<<<<< HEAD
             field=models.CharField(choices=[('New', 'new'), ('Expired', 'expired'), ('Pending', 'pending'), ('Accepted', 'accepted')], default='New', max_length=120),
+=======
+            field=models.CharField(choices=[('Pending', 'pending'), ('Accepted', 'accepted'), ('New', 'new'), ('Expired', 'expired')], default='New', max_length=120),
+>>>>>>> e4c7b9b30aca467a10a7c9007b6356231f55652d
         ),
         migrations.AlterField(
             model_name='involved',
             name='status',
+<<<<<<< HEAD
             field=models.CharField(choices=[('Accepted', 'Accepted'), ('Declined', 'Declined'), ('No Response', 'No Response')], default='No Response', max_length=120),
+=======
+            field=models.CharField(choices=[('Declined', 'Declined'), ('Accepted', 'Accepted'), ('No Response', 'No Response')], default='No Response', max_length=120),
+>>>>>>> e4c7b9b30aca467a10a7c9007b6356231f55652d
         ),
     ]

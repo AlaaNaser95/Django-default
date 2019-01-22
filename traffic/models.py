@@ -28,7 +28,7 @@ class Accident(models.Model):
     status=models.CharField(max_length=120,choices=STATUS,default='New')
  
 class CarImage(models.Model):
-    accident_image=models.TextField(validators=[validate_file_extension])
+    accident_image=models.ImageField()
     accident=models.ForeignKey(Accident, on_delete=models.CASCADE)
 
 class RegistrationImage(models.Model):
