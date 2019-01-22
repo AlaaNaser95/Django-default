@@ -13,7 +13,6 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
 from easy_pdf.rendering import render_to_pdf
-# Create your views here.
 
 from django.utils import timezone    
 from io import BytesIO
@@ -23,43 +22,34 @@ from django.http import FileResponse
 from django.core.mail import EmailMessage
 
 def home(request):
-    
     return render(request, 'home.html')
 
 def trial(request):
-    
     return render(request, 'trial1.html')    
 
-
-def accidentCreate(request,involved=2):
+def accidentCreate(request,involved):
     if request.user.is_anonymous:
         return redirect('login')
-    GroupInvolvedFormSet = modelformset_factory(
+    involvedFormSet = modelformset_factory(
             Profile,
             form = ProfileAccidentForm,
             fields=('civil_id','email'),
             labels={'civil_id':'Civil id',
             'email':'Email'},
-
             extra = involved-1
-
         )
-    GroupRegistrationImageFormSet = modelformset_factory(
+    registrationImageFormSet = modelformset_factory(
             RegistrationImage,
             form = forms.ModelForm,
             fields=('regist_image',),
             labels={'regist_image':'Involved Car registration'},
             extra = involved
         )
-    involvedFormset = GroupInvolvedFormSet(queryset=Profile.objects.none())
-    registrationFormset = GroupRegistrationImageFormSet(queryset=RegistrationImage.objects.none())
+    involvedFormset = involvedFormSet(queryset=Profile.objects.none())
+    registrationFormset = registrationImageFormSet(queryset=RegistrationImage.objects.none())
     accidentForm=AccidentForm()
     commentForm=CommentForm()
     car_images_form=CarImageForm()
-    # car_images_form=modelform_factory(CarImage,form=forms.ModelForm, fields=('accident_image',))
-    """In case Of Post"""
-    # files = request.FILES.getlist('file_field')
-    # print(files)
     if request.method == "POST":
         accidentForm = AccidentForm(request.POST, request.FILES)
         involvedFormset = GroupInvolvedFormSet(request.POST, queryset=Profile.objects.none())
@@ -135,7 +125,6 @@ def user_register(request):
             pop.user=user
             pop.save()
             login(request, user)
-            # Where you want to go after a successful signup
             return redirect('accident-report')
         elif User.objects.get(username=request.POST['username']):
             error="This username already exists"
@@ -168,8 +157,6 @@ def user_profile(request):
             user.set_password(user.password)
             user.save()
             prof_form.save()
-            # login(request.user)
-            # messages.success(request, "Successfully Updated!")
             return redirect('login')
     context={
         "accidents":accidents,
@@ -190,7 +177,7 @@ def updateProfile(request):
     prof_form = prof_form(instance=profile)
     if request.method == "POST":
         prof_form = modelform_factory(Profile, form=forms.ModelForm,fields=('phone_no',),labels={'phone_no':'Mobile Number'})
-        user_form = modelform_factory(User, form=forms.ModelForm,fields=('username','password','email',))
+        user_form = modelform_factory(User, form=forms.ModelForm,fields=('password','email',))
         prof_form = prof_form(request.POST,instance=profile)
         user_form = user_form(request.POST,instance=request.user)
         if prof_form.is_valid() and user_form.is_valid():
@@ -198,8 +185,6 @@ def updateProfile(request):
             user.set_password(user.password)
             user.save()
             prof_form.save()
-            # login(request.user)
-            # messages.success(request, "Successfully Updated!")
             return redirect('login')    
     
     context = {
