@@ -38,39 +38,30 @@ p,small,span,th,td,.register{
 
 
 <center>
- <div class="float-center" > 
-<div class="logo animated fadeInDown"><h1>LOGIN</h1></div>
-
-      <div class="login float-center">
-
-        <form action="{% url 'login' %}" method="POST">
-          {% csrf_token %}
-          <p class="text-danger big">{{error}}</p>
+  <div class="float-center" > 
+    <div class="logo animated fadeInDown">
+      <h1>LOGIN</h1>
+    </div>
+    <div class="login float-center">
+      <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        <p class="text-danger big">{{error}}</p>
         <fieldset class="clearfix mt-4 animated fadeInUp" style="color:white">
           <span>Username*</span>
           <p class="animated fadeInUp "><span class="fa fa-user float-left" style="color:darkblue"></span>{{form.username}}
-    </p> 
+          </p> 
           <span>Password*</span>
-
           <p class="animated fadeInUp"><span class="fa fa-lock float-left " style="color:darkblue"></span>{{form.password}}</p>
-          
-           <div>
-                              
-                              <span  style="width:50%; text-align:center; font-size:15px;  display: inline-block;"><input type="submit" value="Login"></span>
-
-                          </div>
-
-        </fieldset>
-<div class="clearfix"></div>
-        </form>
-
         
-      </div> <!-- end login -->
-      <a href="{% url 'register' %}" class="text-white">Don't have account?</a>
-      </div>
-      
-
-      </center>
-    
+          <div>
+            <span  style="width:50%; text-align:center; font-size:15px;  display: inline-block;"><input type="submit" value="Login"></span>
+          </div>
+        </fieldset>
+        <div class="clearfix"></div>
+      </form>
+    </div> <!-- end login -->
+    <a href="{% url 'register' %}" class="text-white">Don't have account?</a>
+  </div>
+</center>  
 {% endblock content %}
 

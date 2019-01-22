@@ -4,13 +4,8 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from traffic.views import (accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,involved)
 
-<<<<<<< HEAD
-from traffic.views import (accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,trial,involved)
-=======
-from traffic.views import accidentCreate, user_login, user_register, email, accidentList,accidentDetail,user_profile, home, user_logout,updateProfile,accidentListStaff,accidentDetailStaff,compliance,declined,report,send_pdf,involved
-
->>>>>>> e4c7b9b30aca467a10a7c9007b6356231f55652d
 
 
 

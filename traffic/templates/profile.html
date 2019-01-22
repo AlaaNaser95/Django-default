@@ -21,67 +21,68 @@ small,span,th,td,.register{
 }
 </style>
 <div class="row">
-<div class="col-2 col-lg-2 col-md-1 col-sm-2 "></div>
-            <div class="col-8 col-lg-8 col-md-9 col-sm-7 form-block animated fadeInDown" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
-                          <h2>{{request.user.first_name}} {{request.user.last_name}} <br>
-                            <small class="text-warning">Civil ID: {{request.user.profile.civil_id}}</small></h2>
-                          
-                          <div class="form">
-                            <form action="{% url 'profile' %}" method="POST" style="color:black">
-                              {% csrf_token %}
-                              
-                                
-                                <div class="row">
-                                <div class=" col form-group" >
-                                  <span style="color:white;">Email</span>
-                                    <p><span class="fas fa-envelope float-left bg-white" style="line-height:34px;color:darkblue;padding: 0 2px;"></span>{{user_form.email}}</p>
-                                </div>
-                                <div class=" col form-group" >
-                                  <span style="color:white;">Mobile</span>
-                                    <p><span class="fa fa-phone float-left bg-white" style="line-height:34px; color:darkblue;padding: 0 2px;"></span>{{prof_form.phone_no}}</p>
-                                </div>
-                              </div>
-                              <div class="row">
-                              <div class="col form-group" >
-                                  <span style="color:white;">Password*</span>
-                                    <p><span class="fas fa-id-card float-left bg-white" style="line-height:34px; color:darkblue;padding: 0 2px;"></span>{{user_form.password}}</p>
-                                </div>
-                              </div>
-                                <input type="submit" value="Update Profile" class="register">
-
-                            </form>
-
-                          </div>
-                        </div>
-                    <div class="col-2 col-lg-2 col-md-1 col-sm-1"></div>
-                  </div>
-    	
-    		<div class="col-9 animated bounceInLeft" style="text-align:left; margin:0 auto;">
-          <h1 class="text-white text-center ">Accidents History</h1>
+  <div class="col-2 col-lg-2 col-md-1 col-sm-2 "></div>
+  <div class="col-8 col-lg-8 col-md-9 col-sm-7 form-block animated fadeInDown" style="margin-top:50px; background-color:rgba(105,105,105,0.5);">
+    <h2>{{request.user.first_name}} {{request.user.last_name}} <br>
+      <small class="text-warning">Civil ID: {{request.user.profile.civil_id}}</small>
+    </h2>                
+    <div class="form">
+      <form action="{% url 'profile' %}" method="POST" style="color:black">
+        {% csrf_token %}
+        <div class="row">
+          <div class=" col form-group" >
+            <span style="color:white;">Email</span>
+              <p>
+                <span class="fas fa-envelope float-left bg-white" style="line-height:34px;color:darkblue;padding: 0 2px;"></span>
+                {{user_form.email}}
+              </p>
+          </div>
+          <div class=" col form-group" >
+            <span style="color:white;">Mobile</span>
+              <p>
+                <span class="fa fa-phone float-left bg-white" style="line-height:34px; color:darkblue;padding: 0 2px;"></span>{{prof_form.phone_no}}
+              </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col form-group" >
+            <span style="color:white;">Password*</span>
+              <p>
+                <span class="fas fa-id-card float-left bg-white" style="line-height:34px; color:darkblue;padding: 0 2px;"></span>{{user_form.password}}
+              </p>
+          </div>
+        </div>
+        <input type="submit" value="Update Profile" class="register">
+      </form>
+    </div>
+  </div>
+  <div class="col-2 col-lg-2 col-md-1 col-sm-1"></div>
+</div>
+<div class="col-9 animated bounceInLeft" style="text-align:left; margin:0 auto;">
+  <h1 class="text-white text-center ">Accidents History</h1>
   <table class="table table-borderless" style="background-color:rgba(105,105,105,0.5)">
-  <thead class="thead bg-danger text-white">
-    <tr>
-      <th scope="col">Accident ID</th>
-      <th scope="col">Date & Time</th>
-      <th scope="col">Status</th>
-      <th scope="col"></th>
-    </tr>
-  </thead class="thead text-white">
-  <tbody class="thead text-white">
-  {% for accident in  accidents %}
-
-  <tr>
-    
-  <td><a class="text-white" href="{% url 'accident-detail' accident.id %}">{{accident.id}}</a></td> 
-  <td>{{accident.date_time}}</td>
-  <td>{{accident.status}}</td>
-  <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">View</a></td>
-</tr>
-  {% endfor %}
-</tbody>
-</table>
-</div>  
-
+    <thead class="thead bg-danger text-white">
+      <tr>
+        <th scope="col">Accident ID</th>
+        <th scope="col">Date & Time</th>
+        <th scope="col">Status</th>
+        <th scope="col"></th>
+      </tr>
+    </thead class="thead text-white">
+    <tbody class="thead text-white">
+      {% for accident in  accidents %}
+        <tr>
+          <td>
+            <a class="text-white" href="{% url 'accident-detail' accident.id %}">{{accident.id}}</a>
+          </td> 
+          <td>{{accident.date_time}}</td>
+          <td>{{accident.status}}</td>
+          <td><a href="{% url 'accident-detail' accident.id %}" class="btn btn-warning">View</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}
 
 

@@ -13,12 +13,6 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
 from easy_pdf.rendering import render_to_pdf
-
-from django.utils import timezone    
-from io import BytesIO
-from django.http import FileResponse
-
-
 from django.core.mail import EmailMessage
 
 def home(request):
@@ -39,9 +33,6 @@ def involved(request):
     }
 
     return render(request, "involved.html",context)
-
-
-
 
 def accidentCreate(request,involved):
     if request.user.is_anonymous:
@@ -68,10 +59,10 @@ def accidentCreate(request,involved):
     car_images_form=CarImageForm()
     if request.method == "POST":
         accidentForm = AccidentForm(request.POST, request.FILES)
-        involvedFormset = GroupInvolvedFormSet(request.POST, queryset=Profile.objects.none())
+        involvedFormset = involvedFormSet(request.POST, queryset=Profile.objects.none())
         car_images_form=CarImageForm(request.POST, request.FILES)
         commentForm=CommentForm(request.POST)
-        registrationFormset=GroupRegistrationImageFormSet(
+        registrationFormset=registrationImageFormSet(
                 request.POST,
                 request.FILES,
                 queryset=RegistrationImage.objects.none(),
@@ -234,11 +225,9 @@ def updateProfile(request):
 
 def user_logout(request):
     logout(request)
-    # Where you would like to redirect the user after successfully logging out
     return redirect("home")
 
 def report(request):
-    # Where you would like to redirect the user after successfully logging out
     return render(request, 'report.html')
 
 
@@ -264,9 +253,7 @@ def accidentList(request):
 def accidentDetail(request, accident_id):
     if request.user.is_anonymous:
         return redirect('login')
-
     accident = Accident.objects.get(id=accident_id)
-    #need to check if the user involved in the accident
     involved = accident.involved_people.all()
     involved_comment = Involved.objects.filter(accident=accident)
     car_images=CarImage.objects.filter(accident=accident)

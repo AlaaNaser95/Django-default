@@ -29,22 +29,21 @@ h3{
 
 <div class="animated fadeInUp" style="    display: flex;
     justify-content: center;">
-<div class="card text-center" style="background-color:rgba(105,105,105,0.5);width: 50rem; border-color:white; border-radius:10px;">
-  <h3 class="card-header text-white border-color: white; ">How many people are involved in the accident?</h3>
-  <div class="card-body">
+    <div class="card text-center" style="background-color:rgba(105,105,105,0.5);width: 50rem; border-color:white; border-radius:10px;">
+        <h3 class="card-header text-white border-color: white; ">How many people are involved in the accident?</h3>
+        <div class="card-body">
 
-        <form action="{% url 'involved'%}" method="POST" enctype="multipart/form-data">
-            <br>
-            {% csrf_token %}
-            <input type="number" class="text-center" name="involved" value="2" min="2" max="5">
-            <p class="text-danger" style="font-size:20px; font-weight:bold;">{{error}}</p>
-            <br>
+            <form action="{% url 'involved'%}" method="POST" enctype="multipart/form-data">
+                <br>
+                {% csrf_token %}
+                <input type="number" class="text-center" name="involved" value="2" min="2" max="5">
+                <p class="text-danger" style="font-size:20px; font-weight:bold;">{{error}}</p>
+                <br>
 
-            <br>
-        <input type="submit" value="Submit" class="btn btn-warning textx">
-    </form>
-
-</div>
-</div>
+                <br>
+                <input type="submit" value="Submit" class="btn btn-warning textx">
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock content %}

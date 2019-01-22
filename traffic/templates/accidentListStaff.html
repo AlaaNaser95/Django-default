@@ -113,66 +113,63 @@ a.list-group-item.active small {
 </style>
 </head>
 <body>
-{% include "navbar.html" %}
-<div class="container">
-    <div class="row">
-        <div class="container well">
-        <h1 class="text-center">New Accidents</h1>
+    {% include "navbar.html" %}
+    <div class="container">
+        <div class="row">
+            <div class="container well">
+            <h1 class="text-center">New Accidents</h1>
+            </div>
+            <div  class=" col-md-12 " style="height:500px;overflow-y:scroll;">
+                {% for accident in  new_accidents %}
+                    <div class="col-md-12 well">
+                        <div class="list-group">
+                            <a href="{% url 'staff-accident-detail' accident.id %}"class="list-group-item active">
+                                <div class="col-md-9">
+                                    <h4 class="list-group-item-heading">  Accident No: {{accident.id}} </h4>
+                                    <p class="list-group-item-text"> Date & Time:  {{accident.date_time}}
+                                    </p>
+                                    <p class="list-group-item-text status">{{accident.status}}
+                                    </p>
+                                    <p class="list-group-item-text text" >{{accident.description}}
+                                    </p>
+                                </div> 
+                            </a>
+                 
+                        </div>
+                        <div class="container text-center">
+                            <a class="btnContact" href="{% url 'staff-accident-detail' accident.id %}">Generate Report</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-           <div  class=" col-md-12 " style="height:500px;overflow-y:scroll;">
-        {% for accident in  new_accidents %}
-        <div class="col-md-12 well">
-        <div class="list-group">
-          <a href="{% url 'staff-accident-detail' accident.id %}"class="list-group-item active">
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading">  Accident No: {{accident.id}} </h4>
-                    <p class="list-group-item-text"> Date & Time:  {{accident.date_time}}
-                    </p>
-                    <p class="list-group-item-text status">{{accident.status}}
-                    </p>
-                    <p class="list-group-item-text text" >{{accident.description}}
-                    </p>
-                </div> 
-          </a>
-             
-        </div>
-        <div class="container text-center">
-                    <a class="btnContact" href="{% url 'staff-accident-detail' accident.id %}">Generate Report</a>
-        </div>
-        </div>
-        {% endfor %}
     </div>
+    <div class="container">
+        <div class="row">
+            <div class="container wellx">
+                <h1 class="text-center text-light">Reported Accidents</h1>
+            </div>
+            <div class=" col-md-12 " style="height:500px;overflow-y:scroll;">
+                {% for accident in  accidents %}
+                    <div class=" col-md-12 well">
+                        <div class="list-group">
+                            <a href="{% url 'staff-accident-detail' accident.id %}"class="list-group-item active">
+                                <div class="col-md-9">
+                                    <h4 class="list-group-item-heading">  Accident No: {{accident.id}} </h4>
+                                    <p class="list-group-item-text"> Date & Time:  {{accident.date_time}}
+                                    </p>
+                                    <p class="list-group-item-text text" >{{accident.description}}
+                                    </p>
+                                </div> 
+                            </a>
+                        </div>
+                        <div class="container text-center">
+                            <a class="btnContactx" href="{% url 'staff-accident-detail' accident.id %}" >View</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="container wellx">
-        <h1 class="text-center text-light">Reported Accidents</h1>
-        </div>
-        <div class=" col-md-12 " style="height:500px;overflow-y:scroll;">
-        {% for accident in  accidents %}
-        <div class=" col-md-12 well">
-        <div class="list-group">
-          <a href="{% url 'staff-accident-detail' accident.id %}"class="list-group-item active">
-                <div class="col-md-9">
-                    <h4 class="list-group-item-heading">  Accident No: {{accident.id}} </h4>
-                    <p class="list-group-item-text"> Date & Time:  {{accident.date_time}}
-                    </p>
-                    <p class="list-group-item-text text" >{{accident.description}}
-                    </p>
-                </div> 
-          </a>
-             
-        </div>
-        <div class="container text-center">
-                    <a class="btnContactx" href="{% url 'staff-accident-detail' accident.id %}" >View</a>
-        </div>
-
-
-        </div>
-        {% endfor %}
-    </div>
-    </div>
-</div>
 </body>
 </html>

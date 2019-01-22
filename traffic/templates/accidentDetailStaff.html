@@ -22,114 +22,103 @@ p,th,td{
 }
 </style>
 {% load crispy_forms_tags %}
-<div class="container">
-	<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
-		<div class="card-body">
-			<h1 class="card  text-white text-center" style="background-color:#073596">Accident-{{accident.id}}</h1>
-			<br>
-			<h3 class="bg-dark text-white">Date & Time: {{accident.date_time}}</h3>
-			<br>
-			<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
-			<p class="card-text text-white" ><h3 class="bg-dark text-white">Location:</h3> <div class="text-center" id="mapholder"></div></p>
-		
-			
-
-	<div class="card text-center">
-		<div class="card-body">
-
-			<h5 class="card-title">Involved:</h5>
-  <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Civil ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Status</th>
-
-      <th scope="col">Comment</th>
-    </tr>
-  </thead>
-  <tbody>
-  {%for person in involved%}
-			<tr>
-
-			<td>{{person.involved.civil_id}}</td>
-			<td>{{person.involved.user.firstname}} {{person.involved.user.lastname}}</td>
-			<td>{{person.status}}</td>
-			<td>{{person.comment}}</td>
-
-
-			</tr>
-			{% endfor%}
-		</tbody>
-
-			</table>
-		
-
-
-			<div>
-				<h3 class="text-white bg-dark">Accident Images</h3>
+	<div class="container">
+		<div class="card-text" style="background-color:rgba(169,169,169, 0.3)" >
+			<div class="card-body">
+				<h1 class="card  text-white text-center" style="background-color:#073596">Accident-{{accident.id}}</h1>
 				<br>
-			{% for img in car_images%}
-				<img src="{{img.accident_image.url}}" width="280" height="300" onclick="window.open(this.src)"/>
-				{% endfor %}
+				<h3 class="bg-dark text-white">
+				Date & Time: {{accident.date_time}}</h3>
 				<br>
+				<body onload="showPosition({{accident.location_longitude}},{{accident.location_latitude}})"></body>
+				<p class="card-text text-white" >
+					<h3 class="bg-dark text-white">Location:</h3>
+					<div class="text-center" id="mapholder"></div>
+				</p>
+				<div class="card text-center">
+					<div class="card-body">
+
+						<h5 class="card-title">Involved:</h5>
+		  				<table class="table">
+		  					<thead class="thead-dark">
+		    					<tr>
+							      	<th scope="col">Civil ID</th>
+							      	<th scope="col">Name</th>
+							      	<th scope="col">Status</th>
+
+							      	<th scope="col">Comment</th>
+						    	</tr>
+		  					</thead>
+		  					<tbody>
+		  						{%for person in involved%}
+								<tr>
+									<td>{{person.involved.civil_id}}</td>
+									<td>{{person.involved.user.firstname}} {{person.involved.user.lastname}}</td>
+									<td>{{person.status}}</td>
+									<td>{{person.comment}}</td>
+								</tr>
+								{% endfor%}
+							</tbody>
+						</table>
+						<div>
+							<h3 class="text-white bg-dark">Accident Images</h3>
+							<br>
+							{% for img in car_images%}
+								<img src="{{img.accident_image.url}}" width="280" height="300" onclick="window.open(this.src)"/>
+							{% endfor %}
+							<br>
+						</div>
+						<div>
+							<br>
+							<h3 class="text-white bg-dark">Car Registration Images</h3>
+							<br>
+							{% for img in regis_images%}
+							<img src="{{img.regist_image.url}}" width="380" height="400" onclick="window.open(this.src)"/>
+							
+							{% endfor %}
+						</div>
+					</div>
+				</div>
 			</div>
-			<div>
-				<br>
-				<h3 class="text-white bg-dark">Car Registration Images</h3>
-				<br>
-				{% for img in regis_images%}
-				<img src="{{img.regist_image.url}}" width="380" height="400" onclick="window.open(this.src)"/>
-				
-				{% endfor %}
-			</div>
-		</div>
-		    
-</div>
-</div>
 			{% if not accident.report %}
-			<br>
-
-<div >
-<div class="card text-center" >
-  <h3 class="card-header bg-white">Generate Report</h3>
-  <div class="card-body">
-
-        <form action="{% url 'staff-accident-detail' accident.id%}" method="POST" enctype="multipart/form-data">
-            <p>Accident {{accident.id}}</p>
-            <br>
-            {% csrf_token %}
-            {{form|crispy}}
-            <br>
-            <br>
-        <input type="submit" value="Report" class="btn btn-outline-warning">
-    </form>
-
-</div>
-</div>
-</div>
-
+				<br>
+				<div>
+					<div class="card text-center" >
+		  				<h3 class="card-header bg-white">Generate Report</h3>
+		  				<div class="card-body">
+		        			<form action="{% url 'staff-accident-detail' accident.id%}" method="POST" enctype="multipart/form-data">
+		            			<p>Accident {{accident.id}}</p>
+		            			<br>
+		            			{% csrf_token %}
+		            			{{form|crispy}}
+		            			<br>
+		            			<br>
+		        				<input type="submit" value="Report" class="btn btn-outline-warning">
+		    				</form>
+						</div>
+					</div>
+				</div>
 			{% else %}
-			<h3 class="text-white bg-dark"> Report Details</h3>
-			<br>
-			<p class="card-text text-white" ><strong>Detective: </strong>{{request.user.first_name}} {{request.user.last_name}}</p>
+				<h3 class="text-white bg-dark"> Report Details</h3>
+				<br>
+				<p class="card-text text-white" ><strong>Detective: </strong>{{request.user.first_name}} {{request.user.last_name}}</p>
 
-			<p class="card-text text-white" ><strong>Examiner: </strong>{{accident.report.examiner}}</p>
-			<p class="card-text text-white" ><strong>Reported At: </strong>{{accident.report.reported_at}}</p>
+				<p class="card-text text-white" ><strong>Examiner: </strong>{{accident.report.examiner}}</p>
+				<p class="card-text text-white" ><strong>Reported At: </strong>{{accident.report.reported_at}}</p>
 			{% endif %}
 		</div>		    
-</div>
-</div>
-<script>
+	</div>
 
-function showPosition(location_longitude,location_latitude) {
-console.log("Hello")       
-        var latlon = location_latitude + "," + location_longitude;
-        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
+	<script>
 
-document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
-   
-}
+	function showPosition(location_longitude,location_latitude) {
+	console.log("Hello")       
+	        var latlon = location_latitude + "," + location_longitude;
+	        var img_url = "https://maps.googleapis.com/maps/api/staticmap?center="+latlon+"&zoom=18&size=400x300&sensor=false&key=AIzaSyDZG-gtTFCZ2SProv9zW0vM_97ZEVK9a1s";
 
-</script>
+	document.getElementById("mapholder").innerHTML = "<img src='"+img_url+"'>";
+	   
+	}
+
+	</script>
 {% endblock %}
